@@ -29,7 +29,7 @@
               <!-- step 1 -->
               <div class="steps" id="step1">
                 <!-- file drag and drop -->
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="" class="label d-none d-sm-none d-md-block">Profile Image</label>
                   <div class="zone">
                     <div id="dropZ">
@@ -45,6 +45,23 @@
                       </div>
                     </div>
                   </div>
+                </div> -->
+                <div class="form-group">
+                  <label for="" class="label d-none d-sm-none d-md-block">Profile Image</label>
+                  <input type="file" id="file" />
+                  <label for="file" class="file__drop" data-image-uploader>
+                    <img id="img-preview" v-if="profImgUploaded" data-image />
+                    <div id="upload-icon" v-if="!profImgUploaded">
+                      <img class="d-none d-sm-none d-md-block"src="../../assets/images/upload.svg" alt="">
+                      <img class="d-xm-block d-sm-block d-md-none d-lg-none d-xl-none"src="../../assets/images/user.jpg" alt="">
+                    </div>
+                    <p class="grey-bold d-none d-sm-none d-md-block" v-if="!profImgUploaded">Drag and drop photo here <br><span class="grey d-none d-sm-none d-md-block">or</span></p>
+
+                    <div id="upload-btn" for="file">
+                      <span v-if="!profImgUploaded">Upload Photo</span>
+                      <span v-if="profImgUploaded">Choose Another</span>
+                    </div>
+                  </label>
                 </div>
                 <!-- Name -->
                 <div class="form-group">
@@ -189,22 +206,22 @@
 
                 <!-- file drag and drop -->
                 <div class="form-group">
-                  <label for="" class="label d-none d-sm-none d-md-block">NID Attachment</label>
-                  <label for="name" class="label sub-label">Enter your NID card number</label>
-                  <div class="zone">
-                    <div id="dropZ">
-                      <div id="upload-icon">
-                        <img class="d-none d-sm-none d-md-block"src="../../assets/images/upload.svg" alt="">
-                        <img class="d-xm-block d-sm-block d-md-none d-lg-none d-xl-none"src="../../assets/images/user.jpg" alt="">
-                      </div>
-                      <p class="grey-bold d-none d-sm-none d-md-block">Drag and drop photo here</p>
-                      <span class="grey d-none d-sm-none d-md-block">or</span>
-                      <div class="ob-selectFile">
-                        <label for="file">Upload Photo</label>
-                        <input type="file" id="fileinput">
-                      </div>
+                  <label for="name" class="label">NID Attachment</label>
+                  <label for="name" class="label sub-label">Attach your NID</label>
+                  <input type="file" id="file_nid" />
+                  <label for="file_nid" class="file__drop_nid" data-image-uploader-nid>
+                    <img id="img-preview" v-if="nidImgUploaded" data-image-nid />
+                    <div id="upload-icon" v-if="!nidImgUploaded">
+                      <img class="d-none d-sm-none d-md-block"src="../../assets/images/upload.svg" alt="">
+                      <img class="d-xm-block d-sm-block d-md-none d-lg-none d-xl-none"src="../../assets/images/image-filled-square.svg" alt="">
                     </div>
-                  </div>
+                    <p class="grey-bold d-none d-sm-none d-md-block" v-if="!nidImgUploaded">Drag and drop photo here <br><span class="grey d-none d-sm-none d-md-block">or</span></p>
+
+                    <div id="upload-btn" for="file">
+                      <span v-if="!nidImgUploaded">Upload Photo</span>
+                      <span v-if="nidImgUploaded">Choose Another</span>
+                    </div>
+                  </label>
                 </div>
 
                 <p><small>By clicking submit I agree to these <a class="link" href="">terms and conditions</a></small></p>
@@ -246,7 +263,9 @@ export default {
       selected_areas: [],
       expertises: [],
       catagorizedExpertise: [],
-      expertiseNone: false
+      expertiseNone: false,
+      profImgUploaded: false,
+      nidImgUploaded: false
     }
   },
   methods: {
@@ -285,6 +304,86 @@ export default {
   },
   mounted: function () {
     var vue = this
+    // file upload
+    $('[data-image-uploader]').on('drop dragover dragenter', { node : 'file' }, dropHandler);
+    $('[data-image-uploader-nid]').on('drop dragover dragenter', { node : 'file_nid' }, dropHandler);
+
+    $('#file').on('change', regularImageUpload);
+    $('#file_nid').on('change', regularImageUpload);
+
+    function regularImageUpload(e) {
+      var node = e.target.id;
+      var file =$(this)[0],
+          type = file.files[0].type.toLocaleLowerCase();
+      if(type.match(/jpg/) !== null || type.match(/jpeg/) !== null || type.match(/png/) !== null || type.match(/gif/) !== null) {
+        readUploadedImage(file.files[0], node);
+      }
+    }
+    function dropHandler(e) {
+      console.log(e.data.node);
+      var node = e.data.node
+  		e.preventDefault();
+      if(e.type === 'drop' && e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files.length) {
+  			var files = e.originalEvent.dataTransfer.files,
+  				type = files[0].type.toLocaleLowerCase();
+  			if(type.match(/jpg/) !== null || type.match(/jpeg/) !== null || type.match(/png/) !== null || type.match(/gif/) !== null) {
+  				readUploadedImage(files[0], node);
+  			}
+  		}
+  		return false;
+    }
+  	function readUploadedImage(img, node) {
+  		var reader;
+  		if(window.FileReader) {
+  			reader = new FileReader();
+  			reader.readAsDataURL(img);
+  			reader.onload = function (file) {
+  				if(file.target && file.target.result) {
+  					imageLoader(file.target.result, displayImage, node);
+
+            if (node == 'file') {
+              vue.profImgUploaded = true;
+              console.log('user: '+ img);
+            }else if (node == 'file_nid') {
+              vue.nidImgUploaded = true;
+              console.log('nid: '+ img);
+            }
+  				}
+  			};
+  			reader.onerror = function () {
+  				throw new Error('Something went wrong!');
+  			};
+  		} else {
+  			throw new Error('FileReader not supported!');
+  		}
+  	}
+  	function imageLoader(src, callback, node) {
+  		var img;
+  		img = new Image();
+  		img.src = src;
+  		img.onload = function() {
+  			imageResizer(img, callback, node);
+  		}
+  	}
+  	function imageResizer(img, callback ,node) {
+  		var canvas = document.createElement( 'canvas');
+  		canvas.width = 200;
+  		canvas.height = 200;
+  		var context = canvas.getContext('2d');
+  		context.drawImage( img, 0, 0, 200, 200 );
+  		callback(canvas.toDataURL(), node);
+  	}
+    function displayImage(img, node) {
+      if(node == 'file') {
+        $('[data-image]').attr('src', img);
+      }
+      else if (node == 'file_nid') {
+        $('[data-image-nid]').attr('src', img);
+      }
+
+    }
+
+
     // STEP TRANSITION
     var current_fs, next_fs
     var current_step;

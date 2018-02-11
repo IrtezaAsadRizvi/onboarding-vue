@@ -83,10 +83,8 @@ body {
     padding-bottom: 120px;
   }
   /* photo upload */
-  div.zone {
+  label.file__drop {
     border: none;
-  }
-  div.zone label {
     font-size: 0.9em;
   }
   /* illustration */
@@ -253,96 +251,53 @@ span.progress-num{
   padding-top: 20px;
   position: relative;
 }
-
-/* photo upload */
-.zone {
-  width: 100%;
-  height: auto;
-  border: 1.5px dashed #445ae3;
-  text-align: center;
-  z-index: 20;
-  -webkit-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
-}
-.zone .ob-selectFile {
-  height: 35px;
-  margin: 20px auto;
-  position: relative;
-  width: 150px;
-}
-.zone #dropZ label,
-.zone #fileinput {
-  cursor: pointer;
-  display: block;
-  height: 35px;
-  left: 0;
-  top: 0;
-  width: 100%;
-}
-.zone label {
-  display: inline-block;
-  font-size: 0.8em;
-  line-height: 33px;
-  padding: 0;
-  text-align: center;
-  white-space: nowrap;
-  text-transform: uppercase;
-  font-weight: 500;
-  background: #fff;
-  color: #445ae3;
-  border: 1.5px solid #445ae3;
-}
-.zone input[type="file"] {
-  opacity: 0;
-  position: absolute;
-  cursor: pointer;
-}
-.zone.in {
-  color: white;
-  border-color: white;
-  background: #445ae3;
-}
-.zone.in i {
-  color: #fff;
-}
-.zone.in label {
-  background: #fff;
-  color: #445ae3;
-}
-/* .zone.hover {
-  color: #fff;
-  background: #445ae3;
-}
-.zone.hover i {
-  color: #445ae3;
-}
-.zone.hover label {
-  background: #fff;
-  color: #445ae3;
-} */
-.zone.fade {
-  -webkit-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
-  opacity: 1;
-}
-.zone span {
-  margin: none;
-  padding: none;
-  font-size: 0.9em;
-  font-weight: 700;
-}
-.zone #upload-icon img {
+/* file upload */
+#upload-icon img {
   margin: 10px auto;
   width: 30px;
   height: auto;
 }
-.zone #upload-icon img:nth-child(2) {
+#upload-icon img:nth-child(2) {
   width: 110px;
-  height: auto;
+  height: 110px;
   margin: 0px auto;
 }
-.zone p{
-  margin-bottom: 0;
+#file {
+  display:none;
+}
+#file_nid {
+  display:none;
+}
+.file__drop, .file__drop_nid {
+  display: block;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  border: 1.5px dashed #445ae3;
+  font-weight: 500;
+  position: relative;
+  text-align: center;
+  padding: 0px 0px 10px 0px;
+}
+
+.file__drop p span, .file__drop_nid p span{
+  font-size: 0.8em;
+}
+#img-preview {
+  height: 110px;
+  width: 110px;
+  margin-top: 10px;
+}
+#upload-btn {
+  border: 1.5px solid #445ae3;
+  width: 150px;
+  padding: 8px;
+  margin: 10px auto;
+  font-size: 0.8em;
+  text-transform: uppercase;
+}
+#upload-btn span {
+  color: #445ae3;
 }
 
 /* service area */
