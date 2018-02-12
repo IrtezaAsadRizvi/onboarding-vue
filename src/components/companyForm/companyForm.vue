@@ -12,9 +12,9 @@
               <div class="right-arrow"><img src="../../assets/images/arrow-point-to-right.svg" alt=""></div>
               <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 1}"><span class="progress-num">2</span> Service Info</li>
               <div class="right-arrow"><img src="../../assets/images/arrow-point-to-right.svg" alt=""></div>
-              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 2}"><span class="progress-num">3</span> NID Info</li>
+              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 2}"><span class="progress-num">3</span> Operation Day</li>
               <div class="right-arrow"><img src="../../assets/images/arrow-point-to-right.svg" alt=""></div>
-              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 3}"><span class="progress-num">4</span> NID Info</li>
+              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 3}"><span class="progress-num">4</span> Financial Info</li>
             </ul>
           </div>
 
@@ -78,7 +78,7 @@ export default {
   data: function () {
     return {
       // step variables
-      progressStepName: ['Personal Info', 'Service Info', 'NID Info', 'blah'],
+      progressStepName: ['Personal Info', 'Service Info', 'Operation Day', 'Financial Day'],
       progressStepNumber: 0,
     }
   },
