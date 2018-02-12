@@ -117,8 +117,19 @@ body {
   color: #909ca8;
   font-weight: 500;
 }
+.no-margin-bottom{
+  margin-bottom: 0px;
+}
 label.label {
   font-size: 0.9em;
+  font-weight: 500;
+}
+label.big-label {
+  font-size: 1.1em;
+  font-weight: 400;
+}
+label.sml-label {
+  font-size: 0.8em;
   font-weight: 500;
 }
 label.label.sub-label{
@@ -129,6 +140,10 @@ label.label.sub-label{
   display: block;
   position: relative;
   top: -7px;
+}
+
+.sml-text{
+  font-size: 0.9;
 }
 
 .list-bullet {
@@ -156,6 +171,9 @@ label.label.sub-label{
 }
 a.link{
   color: #445ae3;
+}
+.list-row {
+  border-bottom: 1px solid rgba(187,191,196,0.3)
 }
 
 /* -------------------------------------------------------------------------- */
@@ -244,6 +262,10 @@ span.progress-num{
   /* transform: translateX(-100%); */
   opacity: 0;
   transition: 0.3s ease-in-out;
+}
+
+#step3{
+  padding-bottom: 50px;
 }
 
 /* the form */
@@ -440,7 +462,26 @@ span.progress-num{
 }
 
 /* select */
-.select select option {
+.date {
+  height: 70px;
+}
+.date .date-label {
+  padding: 10px 0px;
+  margin-bottom: none;
+}
+#time-select select{
+  border: 1.5px solid #CDD8DF;
+  padding: 15px 10px;
+  font-size: 0.9em;
+}
+#time-select .down-arrow {
+  right: 20px;
+  padding: 13px 5px;
+  width: 10px;
+}
+#time-select .down-arrow img{
+  width: 15px;
+  height: auto;
 }
 
 /* radio button */
@@ -467,7 +508,9 @@ span.progress-num{
     left: 0;
     height: 20px;
     width: 20px;
-    background-color: #eee;
+    background-color: #fff;
+    border: 1px solid #bbbfc4;
+    box-sizing: border-box;
     border-radius: 50%;
 }
 .radio:hover input ~ .checkmark {
@@ -476,6 +519,7 @@ span.progress-num{
 .radio input:checked ~ .checkmark {
     background-color: #445ae3;
     box-shadow: 0px 2px 5px 0px rgba(68, 92, 227, 0.6);
+    border: none;
 }
 .checkmark:after {
     content: "";
@@ -501,6 +545,7 @@ span.progress-num{
     width: 100%;
     font-size: 0.9em;
 }
+
 .select select {
   width: 100%;
   display: inline-block;
@@ -516,6 +561,9 @@ span.progress-num{
   border-radius: 2px;
   padding: 15px 20px;
   text-transform: capitalize;
+}
+.select select.disabled{
+
 }
 .select select option:nth-child(1) {
   color: #bbbfc4;

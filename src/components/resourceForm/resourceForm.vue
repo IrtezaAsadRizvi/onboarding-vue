@@ -88,7 +88,7 @@
 
                 <!-- Area -->
                 <div class="form-group">
-                  <label for="name" class="label">Area</label>
+                  <label for="area" class="label">Area</label>
                   <div class="select">
                       <select>
                           <option selected disabled class="option">Select your area</option>
@@ -200,14 +200,14 @@
               <!-- step 3 -->
               <div class="steps" id="step3">
                 <p>You are just one step away from completing your profile</p>
-                <!-- Name -->
+                <!-- Nid number -->
                 <div class="form-group">
                   <label for="name" class="label">NID Number</label>
                   <label for="name" class="label sub-label">Enter your NID card number</label>
                   <input type="email" class="form-control form-input" name="name" placeholder="NID Number">
                 </div>
 
-                <!-- file drag and drop -->
+                <!-- Nid Attachment -->
                 <div class="form-group">
                   <label for="name" class="label">NID Attachment</label>
                   <label for="name" class="label sub-label">Attach your NID</label>
