@@ -14,7 +14,7 @@
       <label for="area" class="sml-label">Area</label>
       <div class="select">
           <select>
-              <option selected class="option">12:00 PM</option>
+              <option selected class="option">Choose area</option>
               <option>Mirpur</option>
               <option>Dhanmondi</option>
               <option>Banani</option>

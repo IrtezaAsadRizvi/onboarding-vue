@@ -1,51 +1,14 @@
 <template lang="html">
   <!-- step 3 -->
   <div class="steps col-xl-6 col-lg-6 col-md-8 col-sm-12 offset-xl-3 offset-lg-3 offset-md-2 offset-sm-0" id="step3">
-    <p>You are just one step away from completing your profile</p>
     <!-- working days -->
     <label for="" class="big-label">Operation Day</label>
     <label for="" class="label sub-label">Select your working days</label>
-    <div class="form-group">
-      <label for="op-days" class="label">How do you work?</label><br>
-      <label class="radio sml-text">Different times in different days
-        <input type="radio" name="dailyOperationTimeType" v-model="dailyOperationTimeType" value="different_times">
-        <span class="checkmark"></span>
-      </label><br>
-      <label class="radio sml-text">Same time every day
-        <input type="radio" name="dailyOperationTimeType" v-model="dailyOperationTimeType" value="same_time">
-        <span class="checkmark"></span>
-      </label>
-    </div>
-    <div style="padding-bottom: 30px" v-if="dailyOperationTimeType == 'same_time'">
-      <label class="label">Working hours</label>
-      <div class="row">
-        <div class="col-md-4 col-sm-4 col-4">
-          <div class="select" id="time-select">
-              <select>
-                  <option selected disabled class="option">12:00 PM</option>
-                  <option>Mirpur</option>
-                  <option>Dhanmondi</option>
-                  <option>Banani</option>
-              </select>
-              <div class="down-arrow"><img src="../../assets/images/arrow-down.svg" alt="&#709;"></div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-4 col-4">
-          <div class="select" id="time-select">
-              <select  >
-                  <option selected disabled class="option">12:00 PM</option>
-                  <option>Mirpur</option>
-                  <option>Dhanmondi</option>
-                  <option>Banani</option>
-              </select>
-              <div class="down-arrow"><img src="../../assets/images/arrow-down.svg" alt="&#709;"></div>
-          </div>
-        </div>
-      </div>
-    </div>
+
+
 
     <!-- days -->
-    <div v-if="dailyOperationTimeType == 'same_time' || dailyOperationTimeType == 'different_times'">
+    <div>
       <div class="row list-row">
         <div class="col-md-4 col-sm-4 col-4">
           <label class="grey">Day</label>
@@ -66,22 +29,64 @@
         </div>
         <div class="col-md-4 col-sm-4 col-4" v-if="date.selected">
           <div class="select" id="time-select">
-              <select>
-                  <option selected disabled class="option">12:00 PM</option>
-                  <option>Mirpur</option>
-                  <option>Dhanmondi</option>
-                  <option>Banani</option>
+              <select v-model="date.from" @change="selectTime($event.target.value , 'from')">
+                  <option disabled selected class="option">from</option>
+                  <option>12:00 PM</option>
+                  <option>1:00 PM</option>
+                  <option>2:00 PM</option>
+                  <option>3:00 PM</option>
+                  <option>4:00 PM</option>
+                  <option>5:00 PM</option>
+                  <option>6:00 PM</option>
+                  <option>7:00 PM</option>
+                  <option>8:00 PM</option>
+                  <option>9:00 PM</option>
+                  <option>10:00 PM</option>
+                  <option>11:00 PM</option>
+                  <option>12:00 AM</option>
+                  <option>1:00 AM</option>
+                  <option>2:00 AM</option>
+                  <option>3:00 AM</option>
+                  <option>4:00 AM</option>
+                  <option>5:00 AM</option>
+                  <option>5:00 AM</option>
+                  <option>7:00 AM</option>
+                  <option>8:00 AM</option>
+                  <option>9:00 AM</option>
+                  <option>10:00 AM</option>
+                  <option>11:00 AM</option>
               </select>
               <div class="down-arrow"><img src="../../assets/images/arrow-down.svg" alt="&#709;"></div>
           </div>
         </div>
         <div class="col-md-4 col-sm-4 col-4" v-if="date.selected">
           <div class="select" id="time-select">
-              <select  >
-                  <option selected disabled class="option">12:00 PM</option>
-                  <option>Mirpur</option>
-                  <option>Dhanmondi</option>
-                  <option>Banani</option>
+              <select v-model="date.to" @change="selectTime($event.target.value , 'to')">
+                <option disabled selected class="option">to</option>
+                <option>12:00 PM</option>
+                <option>1:00 PM</option>
+                <option>2:00 PM</option>
+                <option>3:00 PM</option>
+                <option>4:00 PM</option>
+                <option>5:00 PM</option>
+                <option>6:00 PM</option>
+                <option>7:00 PM</option>
+                <option>8:00 PM</option>
+                <option>9:00 PM</option>
+                <option>10:00 PM</option>
+                <option>11:00 PM</option>
+                <option>12:00 AM</option>
+                <option>1:00 AM</option>
+                <option>2:00 AM</option>
+                <option>3:00 AM</option>
+                <option>4:00 AM</option>
+                <option>5:00 AM</option>
+                <option>5:00 AM</option>
+                <option>7:00 AM</option>
+                <option>8:00 AM</option>
+                <option>9:00 AM</option>
+                <option>10:00 AM</option>
+                <option>11:00 AM</option>
               </select>
               <div class="down-arrow"><img src="../../assets/images/arrow-down.svg" alt="&#709;"></div>
           </div>
@@ -100,21 +105,21 @@
 export default {
   data: function () {
     return {
-      dailyOperationTimeType: '',
       dailyOperationTime: [
-        { day: 'sunday', from: '', to: '', selected: false },
-        { day: 'monday', from: '', to: '' , selected: false},
-        { day: 'tuesday', from: '', to: '' , selected: false},
-        { day: 'wednessday', from: '', to: '' , selected: false},
-        { day: 'thursday', from: '', to: '' , selected: false},
-        { day: 'friday', from: '', to: '' , selected: false},
-        { day: 'saturday', from: '', to: '' , selected: false}
-      ]
+        { day: 'sunday', from: '12:00 PM', to: '12:00 PM', selected: false },
+        { day: 'monday', from: '12:00 PM', to: '12:00 PM' , selected: false},
+        { day: 'tuesday', from: '12:00 PM', to: '12:00 PM' , selected: false},
+        { day: 'wednessday', from: '12:00 PM', to: '12:00 PM' , selected: false},
+        { day: 'thursday', from: '12:00 PM', to: '12:00 PM' , selected: false},
+        { day: 'friday', from: '12:00 PM', to: '12:00 PM' , selected: false},
+        { day: 'saturday', from: '12:00 PM', to: '12:00 PM' , selected: false}
+      ],
+      setDefaultTime : 0
     }
   },
   methods: {
-    setDailyOperationTimeType: function () {
-      console.log(this.dailyOperationTimeType);
+    selectTime : function (time, type) {
+      console.log(type, time);
     }
   }
 }

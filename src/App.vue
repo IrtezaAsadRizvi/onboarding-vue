@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <company-form></company-form>
+    <resource-form></resource-form>
+    <div class="illustration"><img src="./assets/images/illustration.png" alt=""></div>
   </div>
 </template>
 
@@ -10,6 +11,7 @@ import companyForm from './components/companyForm/companyForm.vue'
 
 export default {
   components: {
+    'resource-form': resourceForm,
     'company-form': companyForm
   }
 }

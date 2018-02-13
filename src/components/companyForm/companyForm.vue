@@ -39,12 +39,14 @@
               <step3 v-if = "progressStepNumber == 2"></step3>
               <step4 v-if = "progressStepNumber == 3"></step4>
 
+              <!-- <success></success> -->
+
               <!-- Next step button -->
               <div class="form-group ob-submit-container text-center col-xl-4 col-lg-4 col-md-6 col-sm-12 offset-xl-4 offset-lg-4 offset-md-3 offset-sm-0">
                 <div class="container ob-submit-subcontainer">
                   <div class="row">
                     <div class="col-12">
-                      <div class="btn btn-block ob-submit" @click="next">Next</div>
+                      <div class="btn btn-block ob-submit" @click="next">{{progressStepNumber == 3? 'submit':'next'}}</div>
                     </div>
                   </div>
                 </div>
@@ -63,7 +65,7 @@
           </div>
         </div>
       </div>
-      <div class="illustration"><img src="../../assets/images/illustration.png" alt=""></div>
+
     </div>
   </div>
 </template>
@@ -73,6 +75,7 @@ import step1 from './companyFormStep1.vue'
 import step2 from './companyFormStep2.vue'
 import step3 from './companyFormStep3.vue'
 import step4 from './companyFormStep4.vue'
+import success from './companySuccess.vue'
 
 export default {
   data: function () {
@@ -87,12 +90,18 @@ export default {
     'step1' : step1,
     'step2' : step2,
     'step3' : step3,
-    'step4' : step4
+    'step4' : step4,
+    'success' : success
   },
   methods: {
     // step change
     next: function () {
-      this.progressStepNumber++
+      if (this.progressStepNumber < 3) {
+        this.progressStepNumber++
+        console.log('going next');
+      }else {
+        console.log('form submitted');
+      }
     }
   }
 }
