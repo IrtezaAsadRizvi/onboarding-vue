@@ -13,7 +13,7 @@
           <div class="down-arrow"><img src="../../assets/images/arrow-down.svg" alt="&#709;"></div>
       </div>
       <ul class="selected-areas">
-        <li v-for="area in selectedAreas"><div class="cross-sign" @click="removeFromArray(selectedAreas,area)"></div>{{area}}</li>
+        <li v-for="area in selectedAreas"><div class="list-bullet" @click="removeFromArray(selectedAreas,area)"></div>{{area}} <div class="cross-sign float-right" @click="removeFromArray(selectedAreas,area)"></div></li>
       </ul>
     </div>
 
