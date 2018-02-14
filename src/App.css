@@ -4,7 +4,7 @@
 /* COLORS */
 /* font color #212121
 primary color : #445ae3
-input feild border volor : #bbbfc4
+input feild border volor : #cdd8df
 input feild placeholder color : #bbbfc4
 grey font : #909ca8
 help section :
@@ -42,16 +42,16 @@ body {
   background-repeat: no-repeat;
 }
 ::placeholder {
-    color: #bbbfc4;
+    color: #cdd8df;
     opacity: 1;
 }
 
 :-ms-input-placeholder {
-   color: #bbbfc4;
+   color: #cdd8df;
 }
 
 ::-ms-input-placeholder {
-   color: #bbbfc4;
+   color: #cdd8df;
 }
 /* -------------------------------------------------------------------------- */
 /* responsiveness */
@@ -170,7 +170,7 @@ label.label.sub-label{
 
 .form-input {
   border-radius: 3px;
-  border: 1.5px solid #bbbfc4;
+  border: 1.5px solid #cdd8df;
   padding: 15px 20px;
   font-size: 0.9em;
 }
@@ -364,7 +364,7 @@ span.progress-num{
 /* expertise */
 /* expertise selection box */
 .expertise {
-  border: 1.5px solid #bbbfc4;
+  border: 1.5px solid #cdd8df;
   height: 65px;
   width: 19%;
   text-align: center;
@@ -478,7 +478,7 @@ span.progress-num{
     height: 17px;
     width: 17px;
     background-color: #fff;
-    border: 1px solid #bbbfc4;
+    border: 1px solid #cdd8df;
     border-radius: 3px;
 }
 .checkboxcontainer:hover input ~ .checkboxcheckmark {
@@ -557,7 +557,7 @@ span.progress-num{
     height: 20px;
     width: 20px;
     background-color: #fff;
-    border: 1px solid #bbbfc4;
+    border: 1px solid #cdd8df;
     box-sizing: border-box;
     border-radius: 50%;
 }
@@ -597,7 +597,7 @@ span.progress-num{
 .select select {
   width: 100%;
   display: inline-block;
-  border: 1.5px solid #bbbfc4;
+  border: 1.5px solid #cdd8df;
   padding: 4px 3px 3px 5px;
   margin: 0;
   font: inherit;
@@ -613,9 +613,9 @@ span.progress-num{
 .select select:hover {
   background-color: #f5f9fb;
 }
-.select select option:nth-child(1) {
+/* .select select option:nth-child(1) {
   color: #bbbfc4;
-}
+} */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   .select select {
     padding-right:30px;
