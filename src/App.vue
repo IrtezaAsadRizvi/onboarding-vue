@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <company-form></company-form>
+    <resource-form></resource-form>
     <div class="illustration"><img src="./assets/images/illustration.png" alt=""></div>
   </div>
 </template>

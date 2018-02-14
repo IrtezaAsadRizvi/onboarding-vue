@@ -4,7 +4,7 @@
       <img src="../../assets/images/check-mark.svg" alt="">
     </div>
     <h3>Congratulations</h3>
-    <p>You have registered your<br>company to sheba.xyz</p>
+    <p>You have registered your company to sheba.xyz</p>
   </div>
 </template>
 

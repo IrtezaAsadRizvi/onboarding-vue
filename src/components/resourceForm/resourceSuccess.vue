@@ -1,10 +1,14 @@
 <template lang="html">
-  <div id="success" class="steps col-xl-6 col-lg-6 col-md-8 col-sm-12 offset-xl-3 offset-lg-3 offset-md-2 offset-sm-0 text-center">
+  <div id="success" class="steps col-xl-4 col-lg-4 col-md-6 col-sm-12 offset-xl-4 offset-lg-4 offset-md-3 offset-sm-0 text-center">
     <div class="success-icon">
       <img src="../../assets/images/check-mark.svg" alt="">
     </div>
     <h3>Congratulations</h3>
-    <p>You have registered your<br>company to sheba.xyz</p>
+    <p class="sml-text grey">Your resource profile has been created successfully. You will be able to start working as soon as we verify your profile.</p>
+    <!-- Next step button -->
+    <div class="form-group text-center">
+      <div class="btn btn-block ob-submit" id="white-btn" @click="">Create Company</div>
+    </div>
   </div>
 </template>
 

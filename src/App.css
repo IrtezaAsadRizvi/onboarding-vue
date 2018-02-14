@@ -37,7 +37,7 @@ html {
 body {
   background-color: #FFF;
   background-image: url('./assets/images/white logo icon.png');
-  background-position: bottom left;
+  background-position: top left;
   background-size: auto;
   background-repeat: no-repeat;
 }
@@ -104,6 +104,9 @@ body {
     background-color: #fff;
     box-shadow: 0px 2px 10px #bbbfc4;
   }
+  #success {
+    padding: 0px;
+  }
 }
 /* */
 
@@ -155,11 +158,24 @@ label.label.sub-label{
   display: inline-block;
 }
 
+.cross-sign {
+  height: 10px;
+  width: 10px;
+  margin-right: 25px;
+  background-image: url('./assets/images/cross-remove-sign.svg');
+  background-size: contain;
+  display: inline-block;
+  cursor: pointer;
+}
+
 .form-input {
   border-radius: 3px;
   border: 1.5px solid #bbbfc4;
   padding: 15px 20px;
   font-size: 0.9em;
+}
+.form-input:hover {
+  background-color: #f5f9fb;
 }
 .form-input:active, .form-input:focus{
   border-color: #445ae3;
@@ -174,6 +190,15 @@ a.link{
 }
 .list-row {
   border-bottom: 1px solid rgba(187,191,196,0.3)
+}
+#white-btn {
+  background-color: #fff;
+  color: #445ae3;
+  border: 1.5px solid #445ae3;
+}
+#white-btn:hover {
+  color: #FFF;
+  background-color: #445ae3;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -271,7 +296,7 @@ span.progress-num{
 }
 
 /* the form */
-.ob-form{
+.ob-form {
   padding-top: 20px;
   position: relative;
 }
@@ -348,6 +373,9 @@ span.progress-num{
   cursor: pointer;
   margin: 0px;
 }
+.expertise:hover {
+  background-color: #f5f9fb;
+}
 .expertise img {
   height: 30px;
   width: auto;
@@ -358,9 +386,15 @@ span.progress-num{
   font-weight: 500;
 }
 .expertise.active {
-  background-color: #f5f9fb;
   border-color: #445ae3;
   box-shadow: 0px 2px 5px 0px rgba(68, 92, 227, 0.6);
+}
+.ob-button {
+  background-color: #fff;
+}
+.ob-button:hover {
+  color: #FFF;
+  background-color: #445ae3;
 }
 
 /* submit button */
@@ -448,7 +482,7 @@ span.progress-num{
     border-radius: 3px;
 }
 .checkboxcontainer:hover input ~ .checkboxcheckmark {
-    background-color: #eee;
+    background-color: #f5f9fb;
 }
 .checkboxcontainer input:checked ~ .checkboxcheckmark {
     background-color: #445ae3;
@@ -528,7 +562,7 @@ span.progress-num{
     border-radius: 50%;
 }
 .radio:hover input ~ .checkmark {
-    background-color: #ccc;
+    background-color: #f5f9fb;
 }
 .radio input:checked ~ .checkmark {
     background-color: #445ae3;
@@ -576,8 +610,8 @@ span.progress-num{
   padding: 15px 20px;
   text-transform: capitalize;
 }
-.select select.disabled{
-
+.select select:hover {
+  background-color: #f5f9fb;
 }
 .select select option:nth-child(1) {
   color: #bbbfc4;
