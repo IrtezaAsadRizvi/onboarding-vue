@@ -38,7 +38,7 @@
               <step3 v-if = "progressStepNumber == 2"></step3>
 
               <!-- <success></success> -->
-
+              <span class="error-text text-center col-xl-4 col-lg-4 col-md-6 col-sm-12 offset-xl-4 offset-lg-4 offset-md-3 offset-sm-0" style="width:100%" v-if="formError">Please fill out the form properly</span>
               <!-- Next step button -->
               <div class="form-group ob-submit-container text-center col-xl-4 col-lg-4 col-md-6 col-sm-12 offset-xl-4 offset-lg-4 offset-md-3 offset-sm-0">
                 <div class="container ob-submit-subcontainer" >
@@ -77,7 +77,9 @@ export default {
       progressStepName: ['Personal Info', 'Service Info', 'NID Info(optional)'],
       progressStepNumber: 0,
       // step data
-      step1Data : null
+      step1Data : null,
+      // form error
+      formError: false
     }
   },
   components: {
@@ -93,7 +95,7 @@ export default {
           this.progressStepNumber++
           console.log('progress');
         }else if (this.step1Data == null) {
-          console.log('fill the form properly');
+          this.formError = true
         }
 
       }else {
