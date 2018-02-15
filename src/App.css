@@ -431,7 +431,12 @@ span.progress-num{
 }
 .submit-alert strong {
   color: #32a578;
-  margin: 20px 0px;
+}
+.submit-alert img {
+  width: 15px;
+  height: auto;
+  margin-right: 10px;
+
 }
 
 /* success icon */

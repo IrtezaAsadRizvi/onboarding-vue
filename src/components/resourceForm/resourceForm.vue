@@ -55,7 +55,7 @@
 
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit-alert-container">
             <div class="alert alert-success submit-alert" role="alert">
-              <!-- icon here --><strong>Why we need this information?</strong><br>
+              <img src="../../assets/images/exclamation-sign.svg"><strong>Why we need this information?</strong><br>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </div>
           </div>

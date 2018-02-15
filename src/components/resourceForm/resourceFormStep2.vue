@@ -47,7 +47,7 @@
     <div class="form-group">
       <div v-if="!expertiseNone" v-for="expertise in catagorizedExpertise">
         <label class="checkboxcontainer">{{expertise}}
-          <input type="checkbox" name="catagorizedExpertise">
+          <input type="checkbox" name="catagorizedExpertise" v-model="expertises">
           <span class="checkboxcheckmark"></span>
         </label>
       </div>
