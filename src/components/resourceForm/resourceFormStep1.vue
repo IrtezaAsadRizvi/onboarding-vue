@@ -29,6 +29,7 @@
         class="form-control form-input"
         name="resource_name"
         placeholder="Full Name"
+        v-model.lazy="resource_name"
         v-validate="'required|alpha_spaces'"
         :class="{'error-field': errors.has('resource_name')}"
         data-vv-as="Name">
@@ -40,15 +41,15 @@
       <label for="resource_gender" class="label">Gender</label><br>
       <div class="container row">
         <label class="radio col">Male
-          <input type="radio" name="resource_gender" value="male" v-validate="{ rules: 'required', arg: 'resource_gender' }">
+          <input type="radio" name="resource_gender" v-model="resource_gender" value="male" v-validate="{ rules: 'required', arg: 'resource_gender' }">
           <span class="checkmark"></span>
         </label>
         <label class="radio col">Female
-          <input type="radio" name="resource_gender" value="female">
+          <input type="radio" name="resource_gender"  v-model="resource_gender" value="female">
           <span class="checkmark"></span>
         </label>
         <label class="radio col">Other
-          <input type="radio" name="resource_gender" value="other">
+          <input type="radio" name="resource_gender"  v-model="resource_gender" value="other">
           <span class="checkmark"></span>
         </label>
       <span v-show="errors.has('resource_gender')" class="error-text">{{ errors.first('resource_gender') }}</span>
@@ -61,6 +62,7 @@
       <input type="text"
         class="form-control form-input"
         name="resource_contact_no"
+        v-model.lazy="resource_contact_no"
         placeholder="Type a Valid number"
         v-validate="'required|numeric'"
         :class="{'error-field': errors.has('resource_contact_no')}"
@@ -72,7 +74,7 @@
     <div class="form-group">
       <label for="resource_address" class="label">Address</label>
       <textarea name="resource_address"
-        class="form-control form-input" rows="4" placeholder="Type your address here"
+        class="form-control form-input" rows="4" placeholder="Type your address here" v-model.lazy="resource_address"
         v-validate="'required'"
         :class="{'error-field': errors.has('resource_address')}"
         data-vv-as="Address"></textarea>
@@ -86,10 +88,34 @@
 export default {
   data: function () {
     return {
+      // form data (to be added to JSON)
+      resource_name: '',
+      resource_gender: '',
+      resource_contact_no: '',
+      resource_address: '',
+
       // file upload
-      profImgUploaded: false
+      profImgUploaded: false,
+
+      // export data
+      step1Data: {
+        name: '',
+        gender: '',
+        contact_no: '',
+        address: ''
+      }
+    }
+  },
+  updated :  function () {
+    if (this.resource_name && this.resource_gender && this.resource_contact_no && this.resource_address) {
+      this.step1Data.name = this.resource_name
+      this.step1Data.gender = this.resource_gender
+      this.step1Data.contact_no = this.resource_contact_no
+      this.step1Data.address = this.resource_address
+      this.$emit('step1Data',this.step1Data)
     }
   }
+
 }
 </script>
 

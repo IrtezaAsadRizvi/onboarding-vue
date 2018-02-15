@@ -1,3 +1,4 @@
+
 <template lang="html">
   <div>
     <div id="on-boarding">
@@ -32,7 +33,7 @@
             <form class="ob-form">
 
               <!-- the form contains three 4-col 'step' section which will be switched when 'next' button is pressed, it's done using jquery -->
-              <step1 v-if = "progressStepNumber == 0"></step1>
+              <step1 v-if = "progressStepNumber == 0" @step1Data="receiveData($event)"></step1>
               <step2 v-if = "progressStepNumber == 1"></step2>
               <step3 v-if = "progressStepNumber == 2"></step3>
 
@@ -75,7 +76,8 @@ export default {
       // step change
       progressStepName: ['Personal Info', 'Service Info', 'NID Info(optional)'],
       progressStepNumber: 0,
-
+      // step data
+      step1Data : null
     }
   },
   components: {
@@ -87,11 +89,19 @@ export default {
   methods: {
     next: function () {
       if (this.progressStepNumber < 2) {
-        this.progressStepNumber++
-        console.log('going next');
+        if(this.progressStepNumber == 0 && this.step1Data != null){
+          this.progressStepNumber++
+          console.log('progress');
+        }else if (this.step1Data == null) {
+          console.log('fill the form properly');
+        }
+
       }else {
         console.log('form submitted');
       }
+    },
+    receiveData(e) {
+      this.step1Data = e
     }
   },
   // loading jquery after component is mounted
