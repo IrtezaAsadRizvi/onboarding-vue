@@ -3,6 +3,7 @@
   <div class="steps col-xl-4 col-lg-4 col-md-6 col-sm-12 offset-xl-4 offset-lg-4 offset-md-3 offset-sm-0" id="step3">
     <p>You are just one step away from completing your profile</p>
     <!-- Nid number -->
+    <!-- optional -->
     <div class="form-group">
       <label for="name" class="label">NID Number</label>
       <label for="name" class="label sub-label">Enter your NID card number</label>

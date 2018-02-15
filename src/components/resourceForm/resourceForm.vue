@@ -12,7 +12,7 @@
               <div class="right-arrow"><img src="../../assets/images/arrow-point-to-right.svg" alt=""></div>
               <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 1}"><span class="progress-num">2</span> Service Info</li>
               <div class="right-arrow"><img src="../../assets/images/arrow-point-to-right.svg" alt=""></div>
-              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 2}"><span class="progress-num">3</span> Operation Day</li>
+              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 2}"><span class="progress-num">3</span> NID Info (optional)</li>
             </ul>
           </div>
 
@@ -73,7 +73,7 @@ export default {
   data: function () {
     return {
       // step change
-      progressStepName: ['Personal Info', 'Service Info', 'NID Info'],
+      progressStepName: ['Personal Info', 'Service Info', 'NID Info(optional)'],
       progressStepNumber: 0,
 
     }

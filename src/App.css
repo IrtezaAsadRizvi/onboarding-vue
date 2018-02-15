@@ -123,6 +123,14 @@ body {
 .no-margin-bottom{
   margin-bottom: 0px;
 }
+input.form-input.error-field, textarea.error-field {
+  border-color: #EA5C5D;
+}
+span.error-text{
+  color: #EA5C5D;
+  font-size: 0.9em;
+  font-weight: 500;
+}
 label.label {
   font-size: 0.9em;
   font-weight: 500;
