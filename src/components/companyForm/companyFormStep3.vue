@@ -23,14 +23,14 @@
       <div class="row date d-flex align-items-center list-row" v-for="date in dailyOperationTime">
         <div class="col-md-4 col-sm-4 col-4">
           <label class="checkboxcontainer no-margin-bottom">{{ date.day }}
-            <input type="checkbox" @click="date.selected = !date.selected">
+            <input type="checkbox" @click="selectDay(date)">
             <span class="checkboxcheckmark"></span>
           </label>
         </div>
         <div class="col-md-4 col-sm-4 col-4" v-if="date.selected">
           <div class="select" id="time-select">
-              <select v-model="date.from" @change="selectTime($event.target.value , 'from')">
-                  <option disabled selected class="option">from</option>
+              <select @change="selectTime(date, $event.target.value, 'from')">
+                  <option selected class="option">{{ setDefaultTime >= 2 ? defaultStartTime : 'from'}}</option>
                   <option>12:00 PM</option>
                   <option>1:00 PM</option>
                   <option>2:00 PM</option>
@@ -61,8 +61,8 @@
         </div>
         <div class="col-md-4 col-sm-4 col-4" v-if="date.selected">
           <div class="select" id="time-select">
-              <select v-model="date.to" @change="selectTime($event.target.value , 'to')">
-                <option disabled selected class="option">to</option>
+              <select @change="selectTime(date, $event.target.value, 'to')">
+                <option selected class="option">{{ setDefaultTime >= 2 ? defaultEndTime : 'to'}}</option>
                 <option>12:00 PM</option>
                 <option>1:00 PM</option>
                 <option>2:00 PM</option>
@@ -114,12 +114,35 @@ export default {
         { day: 'friday', from: '12:00 PM', to: '12:00 PM' , selected: false},
         { day: 'saturday', from: '12:00 PM', to: '12:00 PM' , selected: false}
       ],
-      setDefaultTime : 0
+      setDefaultTime : 0,
+      defaultStartTime: 'start',
+      defaultEndTime: 'end'
     }
   },
   methods: {
-    selectTime : function (time, type) {
-      console.log(type, time);
+    selectTime : function (date, time, type) {
+      if (type == 'from') {
+        if (this.setDefaultTime == 1) {
+          this.defaultStartTime = time
+        }
+        date.from = time
+      }else if (type == 'to'){
+        if (this.setDefaultTime == 1) {
+          this.defaultEndTime = time
+        }
+        date.to = time
+      }
+
+    },
+    selectDay: function (date) {
+      date.selected = !date.selected
+      if (date.selected) {
+        this.setDefaultTime ++
+      } else {
+        this.setDefaultTime --
+      }
+      if (this.setDefaultTime == 2) {
+      }
     }
   }
 }
