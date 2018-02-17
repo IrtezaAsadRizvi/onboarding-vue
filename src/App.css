@@ -78,6 +78,9 @@ body {
     left: 15px;
     font-weight: 500;
   }
+  .steps {
+    padding: 0;
+  }
   div#on-boarding {
     padding-top: 20px;
     padding-bottom: 120px;
@@ -107,6 +110,9 @@ body {
   #success {
     padding: 0px;
   }
+  .submit-alert p{
+    display: none;
+  }
 }
 /* */
 
@@ -120,7 +126,7 @@ body {
   color: #909ca8;
   font-weight: 500;
 }
-.no-margin-bottom{
+.no-margin-bottom {
   margin-bottom: 0px;
 }
 input.form-input.error-field, textarea.error-field {
@@ -428,6 +434,10 @@ span.progress-num{
 }
 .submit-alert {
   background-color: #d0f2db;
+  position: relative;
+}
+.submit-alert p {
+  font-size: 0.9em;
 }
 .submit-alert strong {
   color: #32a578;
@@ -436,7 +446,19 @@ span.progress-num{
   width: 15px;
   height: auto;
   margin-right: 10px;
-
+}
+.submit-alert .down-arrow {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.submit-alert .down-arrow img {
+  width: 20px;
+  height: auto;
+  transition: 0.3s;
+}
+.submit-alert .down-arrow img.up {
+  transform: rotate(180deg);
 }
 
 /* success icon */

@@ -56,7 +56,8 @@
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit-alert-container">
             <div class="alert alert-success submit-alert" role="alert">
               <img src="../../assets/images/exclamation-sign.svg"><strong>Why we need this information?</strong><br>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <div class="down-arrow d-xm-block d-sm-block d-md-none d-lg-none d-xl-none"><img src="../../assets/images/arrow-down-green.svg" alt="&#709;"></div>
             </div>
           </div>
         </div>
@@ -108,6 +109,10 @@ export default {
   },
   // loading jquery after component is mounted
   mounted: function () {
+    $('.submit-alert').on('click',function () {
+      $('.submit-alert p').slideToggle("slow");
+      $('.submit-alert .down-arrow img').toggleClass('up')
+    })
   }
 }
 </script>
