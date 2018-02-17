@@ -94,7 +94,7 @@ export default {
       }
     },
     // expertise based on selected category
-    expertiseMenu: function (e, expertise) {
+    expertiseMenu(e, expertise) {
       this.expertiseNone = false
       if (expertise == 'repair') {
         this.catagorizedExpertise = ['ac repair', 'lock repair', 'laptop repair', 'mobile repair']

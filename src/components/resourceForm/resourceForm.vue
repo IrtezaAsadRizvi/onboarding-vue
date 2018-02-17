@@ -105,6 +105,7 @@ export default {
     },
     receiveData(e) {
       this.step1Data = e
+      console.log(e);
     }
   },
   // loading jquery after component is mounted

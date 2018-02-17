@@ -139,7 +139,9 @@ export default {
       if (date.selected) {
         this.setDefaultTime ++
       } else {
-        this.setDefaultTime --
+        if (this.setDefaultTime < 2) {
+          this.setDefaultTime --
+        }
       }
       if (this.setDefaultTime == 2) {
       }
