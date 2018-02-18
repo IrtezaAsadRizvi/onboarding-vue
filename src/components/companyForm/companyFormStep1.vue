@@ -79,10 +79,10 @@ export default {
       if (data.step == 0) {
         this.$validator.validateAll().then((result) => {
           if (result) {
-            global.companyFormData.company_name = this.formData.company_name
-            global.companyFormData.company_area = this.formData.company_area
-            global.companyFormData.company_address = this.formData.company_address
-            global.companyFormData.licence_number = this.formData.licence_number
+            global.companyFormData.companyName = this.formData.company_name
+            global.companyFormData.companyArea = this.formData.company_area
+            global.companyFormData.companyAddress = this.formData.company_address
+            global.companyFormData.licenceNumber = this.formData.licence_number
             global.$emit('stepSubmitted', {
               step: data.step
             })

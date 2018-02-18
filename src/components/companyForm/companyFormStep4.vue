@@ -10,6 +10,7 @@
           class="form-control form-input"
           name="company_bank_name"
           placeholder="Bank Name"
+          v-model="company_bank_name"
           v-validate="'required|alpha_spaces'"
           :class="{'error-field': errors.has('company_bank_name')}"
           data-vv-as="Bank name">
@@ -24,6 +25,7 @@
           name="company_bank_branch"
           placeholder="Branch Name"
           v-validate="'required|alpha_spaces'"
+          v-model="company_bank_branch"
           :class="{'error-field': errors.has('company_bank_branch')}"
           data-vv-as="Bank Branch name">
         <span v-show="errors.has('company_bank_branch')" class="error-text">{{ errors.first('company_bank_branch') }}</span>
@@ -37,6 +39,7 @@
           name="company_bank_acc_name"
           placeholder="Account Name"
           v-validate="'required|alpha_spaces'"
+          v-model="company_bank_acc_name"
           :class="{'error-field': errors.has('company_bank_acc_name')}"
           data-vv-as="Bank Account name">
         <span v-show="errors.has('company_bank_acc_name')" class="error-text">{{ errors.first('company_bank_acc_name') }}</span>
@@ -50,6 +53,7 @@
           name="company_bank_acc_no"
           placeholder="Account Number"
           v-validate="'required|alpha_num'"
+          v-model="company_bank_acc_no"
           :class="{'error-field': errors.has('company_bank_acc_no')}"
           data-vv-as="Bank Account name">
         <span v-show="errors.has('company_bank_acc_no')" class="error-text">{{ errors.first('company_bank_acc_no') }}</span>
@@ -61,7 +65,29 @@
 </template>
 
 <script>
+import {global} from '../../main.js'
 export default {
+  data: function () {
+    return {
+      company_bank_name: '',
+      company_bank_branch: '',
+      company_bank_acc_name: '',
+      company_bank_acc_no: ''
+    }
+  },
+  created: function () {
+    global.$on('submitRequest', (data)=>{
+      if (data.step == 3) {
+        global.companyFormData.companyBankName = this.company_bank_name
+        global.companyFormData.companyBankBranch = this.company_bank_branch
+        global.companyFormData.companyBankAccName = this.company_bank_acc_name
+        global.companyFormData.companyBankAccNo = this.company_bank_acc_no
+        global.$emit('stepSubmitted', {
+          step: data.step
+        })
+      }
+    })
+  }
 }
 </script>
 

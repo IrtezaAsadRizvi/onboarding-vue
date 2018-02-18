@@ -20,17 +20,17 @@
           <label class="grey">To</label>
         </div>
       </div>
-      <div class="row date d-flex align-items-center list-row" v-for="date in dailyOperationTime">
+      <div class="row date d-flex align-items-center list-row" v-for="(date, index) in dailyOperationTime">
         <div class="col-md-4 col-sm-4 col-4">
           <label class="checkboxcontainer no-margin-bottom">{{ date.day }}
-            <input type="checkbox" @click="selectDay(date)">
+            <input type="checkbox" id="date-check-box" @click="selectDay($event ,date, index)">
             <span class="checkboxcheckmark"></span>
           </label>
         </div>
         <div class="col-md-4 col-sm-4 col-4" v-if="date.selected">
           <div class="select" id="time-select">
-              <select @change="selectTime(date, $event.target.value, 'from')">
-                  <option selected class="option">{{ setDefaultTime >= 2 ? defaultStartTime : 'from'}}</option>
+              <select @change="selectTime(date, $event.target.value, 'from')" :class="defaultStartTimeError? 'error-field': ''">
+                  <option selected class="option">{{ defaultStartTime}}</option>
                   <option>12:00 PM</option>
                   <option>1:00 PM</option>
                   <option>2:00 PM</option>
@@ -61,8 +61,8 @@
         </div>
         <div class="col-md-4 col-sm-4 col-4" v-if="date.selected">
           <div class="select" id="time-select">
-              <select @change="selectTime(date, $event.target.value, 'to')">
-                <option selected class="option">{{ setDefaultTime >= 2 ? defaultEndTime : 'to'}}</option>
+              <select @change="selectTime(date, $event.target.value, 'to')" :class="defaultEndTimeError? 'error-field': ''">
+                <option selected class="option">{{defaultEndTime}}</option>
                 <option>12:00 PM</option>
                 <option>1:00 PM</option>
                 <option>2:00 PM</option>
@@ -96,12 +96,14 @@
         </div>
       </div>
     </div>
+    <span v-show="formError" class="error-text">{{ formError }}</span>
     <!-- end ofdays -->
   </div>
   <!-- end of step 3 -->
 </template>
 
 <script>
+import {global} from '../../main.js'
 export default {
   data: function () {
     return {
@@ -115,8 +117,11 @@ export default {
         { day: 'saturday', from: '12:00 PM', to: '12:00 PM' , selected: false}
       ],
       setDefaultTime : 0,
-      defaultStartTime: 'start',
-      defaultEndTime: 'end'
+      defaultStartTime: null,
+      defaultEndTime: null,
+      defaultStartTimeError: null,
+      defaultEndTimeError: null,
+      formError: null
     }
   },
   methods: {
@@ -134,18 +139,58 @@ export default {
       }
 
     },
-    selectDay: function (date) {
-      date.selected = !date.selected
-      if (date.selected) {
-        this.setDefaultTime ++
-      } else {
-        if (this.setDefaultTime < 2) {
-          this.setDefaultTime --
+    selectDay: function (e, date, index) {
+      console.log(index);
+      if (this.setDefaultTime == 0) {
+        date.selected = !date.selected
+        if (date.selected) {
+          this.setDefaultTime ++
+        } else {
+          if (this.setDefaultTime < 2) {
+            this.setDefaultTime --
+          }
+        }
+        if (this.setDefaultTime >= 2) {}
+      }else{
+        e.preventDefault();
+        if (this.defaultStartTime && this.defaultEndTime) {
+          date.selected = !date.selected
+          console.log(document.getElementById('date-check-box')[2]);
+        }else{
+          if (!this.defaultStartTime) this.defaultStartTimeError = 'please select time'
+          if (!this.defaultEndTime) this.defaultEndTimeError = 'please select time'
+          console.log('wait son!');
         }
       }
-      if (this.setDefaultTime == 2) {
-      }
     }
+
+  },
+  watch: {
+    defaultStartTime : function () {
+      if (!this.defaultStartTime) this.defaultStartTimeError = 'please select time'
+      else this.defaultStartTimeError = null
+    },
+    defaultEndTime : function () {
+      if (!this.defaultEndTime) this.defaultEndTimeError = 'please select time'
+      else this.defaultEndTimeError = null
+    }
+  },
+  created: function () {
+    global.$on('submitRequest', (data)=>{
+      if (data.step == 2) {
+        var formData = this.dailyOperationTime.filter(function(date) {
+           return date.selected == true;
+        })
+        if (formData.length == 0) {
+          this.formError = "please select Operations days."
+        }else {
+          global.companyFormData.companyOperationDays = formData
+          global.$emit('stepSubmitted', {
+            step: data.step
+          })
+        }
+      }
+    })
   }
 }
 </script>

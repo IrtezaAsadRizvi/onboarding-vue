@@ -129,9 +129,10 @@ body {
 .no-margin-bottom {
   margin-bottom: 0px;
 }
-input.form-input.error-field, textarea.error-field {
+input.form-input.error-field, textarea.error-field, .select select.error-field, #time-select select.error-field {
   border-color: #EA5C5D;
 }
+
 span.error-text{
   color: #EA5C5D;
   font-size: 0.9em;

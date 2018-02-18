@@ -6,12 +6,13 @@
     <div class="form-group">
       <label for="name" class="label">Service Area</label>
       <div class="select">
-          <select @change="selectServiceArea">
+          <select @change="selectServiceArea" :class="areaError? 'error-field': ''">
               <option selected disabled>Select service area</option>
               <option v-for="area in serviceAreas" value="">{{area}}</option>
           </select>
           <div class="down-arrow"><img src="../../assets/images/arrow-down.svg" alt="&#709;"></div>
       </div>
+      <span v-show="areaError" class="error-text">{{ areaError }}</span>
       <ul class="selected-areas">
         <li v-for="area in selectedAreas"><div class="list-bullet" @click="removeFromArray(selectedAreas,area)"></div>{{area}} <div class="cross-sign float-right" style="margin: 4px;" @click="removeFromArray(selectedAreas,area)"></div></li>
       </ul>
@@ -21,32 +22,20 @@
       <label for="name" class="label">Expertise</label>
       <label for="name" class="label sub-label">Select your expertise</label>
       <div class="expertise-container d-flex justify-content-between">
-        <div class="expertise" @click="expertiseMenu($event, 'repair')">
-            <img src="../../assets/images/repair.svg" alt="repair">
-            <p>Repair</p>
-        </div>
-        <div class="expertise" @click="expertiseMenu($event, 'beauty')">
-            <img src="../../assets/images/beauty.svg" alt="beauty">
-            <p>Beauty</p>
-        </div>
-        <div class="expertise" @click="expertiseMenu($event, 'cleaning')">
-            <img src="../../assets/images/cleaning-service.svg" alt="cleaning">
-            <p>Cleaning</p>
-        </div>
-        <div class="expertise" @click="expertiseMenu($event, 'food')">
-            <img src="../../assets/images/food.svg" alt="food">
-            <p>Food</p>
+        <div v-for="expertiseCata in expertiseCatas" class="expertise" @click="expertiseMenu($event, expertiseCata.name)">
+            <img :src="expertiseCata.img" :alt="expertiseCata.name">
+            <p>{{expertiseCata.name}}</p>
         </div>
         <div class="expertise" @click="expertiseNone = true">
             <p>None</p>
         </div>
       </div>
     </div>
-    <!--  -->
+    <!-- @click="addExpertise(expertise)" -->
     <div class="form-group">
       <div v-if="!expertiseNone" v-for="expertise in catagorizedExpertise">
-        <label class="checkboxcontainer">{{expertise}}
-          <input type="checkbox">
+        <label class="checkboxcontainer" >{{expertise}}
+            <input type="checkbox" :value="expertise" v-model="selectedExpertise" id="expertise-checkbox">
           <span class="checkboxcheckmark"></span>
         </label>
       </div>
@@ -62,11 +51,13 @@
         </label>
       </div>
     </div>
+    <span v-show="expertiseError" class="error-text">{{ expertiseError }}</span>
   </div>
   <!-- end of step 2 -->
 </template>
 
 <script>
+import {global} from '../../main.js'
 export default {
   data: function () {
     return  {
@@ -74,13 +65,22 @@ export default {
       serviceAreas: ['mirpur', 'gulshan', 'banani', 'uttara', 'dhanmondi', 'khilgaon'],
       selectedAreas: [],
       // expertises
-      expertises: [],
+      expertiseCatas: [
+        {name: 'repair', img: "/dist/repair.svg"},
+        {name: 'beauty', img: "/dist/beauty.svg"},
+        {name: 'cleaning', img: "/dist/cleaning-service.svg"},
+        {name: 'food', img: "/dist/food.svg"}
+      ],
+      selectedExpertise: [],
       catagorizedExpertise: [],
-      expertiseNone: false
+      expertiseNone: false,
+
+      // errors
+      areaError: null,
+      expertiseError: null
     }
   },
   methods: {
-    // Appears in step 2
     // select any 3 service areas
     selectServiceArea: function (e) {
       if(this.selectedAreas.length < 3){
@@ -94,21 +94,24 @@ export default {
       }
     },
     // expertise based on selected category
-    expertiseMenu: function (e, expertise) {
+    expertiseMenu: function (e, expertiseCata) {
       this.expertiseNone = false
-      if (expertise == 'repair') {
+      if (expertiseCata == 'repair') {
         this.catagorizedExpertise = ['ac repair', 'lock repair', 'laptop repair', 'mobile repair']
       }
-      else if (expertise == 'beauty') {
+      else if (expertiseCata == 'beauty') {
         this.catagorizedExpertise = ['hair style', 'facial', 'beauty 1', 'beauty 2']
       }
-      else if (expertise == 'cleaning') {
+      else if (expertiseCata == 'cleaning') {
         this.catagorizedExpertise = ['house cleaning', 'car cleaning', 'cleaning 1', 'cleaning 2', 'cleaning']
       }
-      else if (expertise == 'food') {
+      else if (expertiseCata == 'food') {
         this.catagorizedExpertise = ['cooking', 'food delivery', 'diet planner']
       }
     },
+    // addExpertise: function (expertise) {
+    //   this.selectedExpertise.push(expertise)
+    // },
     removeFromArray: function (arr, what) {
         var found = arr.indexOf(what);
 
@@ -117,6 +120,43 @@ export default {
             found = arr.indexOf(what);
         }
     }
+  },
+  watch: {
+    selectedAreas: function () {
+      if (this.selectedAreas.length > 0) {
+        if (this.selectedAreas.length < 3) {
+          this.areaError = 'You have to select at least 3 areas'
+        }else {
+          this.areaError = null
+
+        }
+      }else {
+        this.areaError = 'You have to select Service areas'
+      }
+    },
+    selectedExpertise: function () {
+      if(this.selectedExpertise.length > 0){
+        this.expertiseError = null
+      }else {
+        this.expertiseError = "You have to select your Expertise"
+      }
+    }
+  },
+  created: function () {
+    global.$on('submitRequest', (data)=>{
+      if (data.step == 1) {
+        if (this.selectedAreas.length == 3 && this.selectedExpertise.length > 0) {
+          global.companyFormData.companyServiceAreas = this.selectedAreas
+          global.companyFormData.companyExpertise = this.selectedExpertise
+          global.$emit('stepSubmitted', {
+            step: data.step
+          })
+        }else {
+          if (this.selectedAreas.length == 0) this.areaError = 'You have to select Service areas'
+          if (this.selectedExpertise.length == 0) this.expertiseError = 'You have to select your Expertise'
+        }
+      }
+    })
   },
   mounted: function () {
     $(".expertise").on('click', function () {

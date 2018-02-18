@@ -107,9 +107,8 @@ export default {
     global.$on('stepSubmitted', (data)=>{
       if (data.step < 3) {
         this.progressStepNumber++
-        console.log('going next');
       }else {
-        console.log('form submitted');
+        console.log(global.companyFormData);
       }
     })
   },
@@ -121,6 +120,9 @@ export default {
     })
   }
 }
+
+
+
 </script>
 
 <style lang="css"></style>
