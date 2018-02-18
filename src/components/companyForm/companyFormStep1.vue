@@ -10,9 +10,9 @@
         v-validate="'required|alpha_spaces'"
         :class="{'error-field': errors.has('company_name')}"
         name="company_name"
+        v-model="formData.company_name"
         placeholder="Company Name"
-        data-vv-as="Name"
-        @input.lazy="errors.has('name') ? companyNameError = 1 : companyNameError = 0">
+        data-vv-as="Name">
       <span v-show="errors.has('company_name')" class="error-text">{{ errors.first('company_name') }}</span>
     </div>
     <!-- Area -->
@@ -21,10 +21,11 @@
       <div class="select">
           <select name="company_area"
             v-validate="'required'"
+            v-model="formData.company_area"
             :class="{'error-field': errors.has('company_area')}">
-              <option value="mirpur">Mirpur</option>
-              <option value="dhanmondi">Dhanmondi</option>
-              <option value="banani">Banani</option>
+              <option value="mirpur">mirpur</option>
+              <option value="dhanmondi">dhanmondi</option>
+              <option value="banani">banani</option>
           </select>
           <div class="down-arrow"><img src="../../assets/images/arrow-down.svg" alt="&#709;"></div>
       </div>
@@ -36,10 +37,10 @@
       <textarea name="company_address"
         class="form-control form-input" rows="5"
         placeholder="Type your address here"
+        v-model="formData.company_address"
         v-validate="'required'"
         :class="{'error-field': errors.has('company_address')}"
-        data-vv-as="Address"
-        @input.lazy="errors.has('name') ? companyAddressError = 1 : companyAddressError = 0"></textarea>
+        data-vv-as="Address"></textarea>
         <span v-show="errors.has('company_address')" class="error-text">{{ errors.first('company_address') }}</span>
     </div>
 
@@ -49,11 +50,11 @@
       <input type="text"
         class="form-control form-input"
         name="licence_number"
+        v-model="formData.licence_number"
         placeholder="Licence number"
         v-validate="'required'"
         :class="{'error-field': errors.has('licence_number')}"
-        data-vv-as="Licence number"
-        @input.lazy="errors.has('name') ? companylincenceNoError = 1 : companylincenceNoError = 0">
+        data-vv-as="Licence number">
         <span v-show="errors.has('licence_number')" class="error-text">{{ errors.first('licence_number') }}</span>
     </div>
 </div>
@@ -61,13 +62,37 @@
 </template>
 
 <script>
+import {global} from '../../main.js'
 export default {
   data: function () {
     return {
-      companyNameError: 1,
-      companyAddressError: 1,
-      companylincenceNoError: 1
+      formData: {
+        company_name: '',
+        company_area: 'mirpur',
+        company_address: '',
+        licence_number: ''
+      }
     }
+  },
+  created: function () {
+    global.$on('submitRequest', (data)=>{
+      if (data.step == 0) {
+        this.$validator.validateAll().then((result) => {
+          if (result) {
+            global.companyFormData.company_name = this.formData.company_name
+            global.companyFormData.company_area = this.formData.company_area
+            global.companyFormData.company_address = this.formData.company_address
+            global.companyFormData.licence_number = this.formData.licence_number
+            global.$emit('stepSubmitted', {
+              step: data.step
+            })
+            console.log(this.formData);
+          }else {
+            console.log('Correct them errors!');
+          }
+        });
+      }
+    })
   }
 }
 </script>

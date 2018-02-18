@@ -80,12 +80,6 @@ export default {
     }
   },
   methods: {
-    next: function () {
-
-    },
-    submit: function () {
-
-    },
     // Appears in step 2
     // select any 3 service areas
     selectServiceArea: function (e) {

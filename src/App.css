@@ -158,7 +158,9 @@ label.label.sub-label{
   position: relative;
   top: -7px;
 }
-
+select option {
+  text-transform: capitalize;
+}
 .sml-text{
   font-size: 0.9;
 }

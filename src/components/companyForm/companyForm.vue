@@ -35,7 +35,7 @@
 
               <!-- the form contains three 4-col 'step' section which will be switched when 'next' button is pressed, it's done using jquery -->
               <step1 v-if = "progressStepNumber == 0"></step1>
-              <step2 v-if = "progressStepNumber == 1"></step2>
+              <step2 v-if = "progressStepNumber == 1" ></step2>
               <step3 v-if = "progressStepNumber == 2"></step3>
               <step4 v-if = "progressStepNumber == 3"></step4>
 
@@ -59,8 +59,9 @@
 
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit-alert-container">
             <div class="alert alert-success submit-alert" role="alert">
-              <!-- icon here --><strong>Why we need this information?</strong><br>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              <img src="../../assets/images/exclamation-sign.svg"><strong>Why we need this information?</strong><br>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <div class="down-arrow d-xm-block d-sm-block d-md-none d-lg-none d-xl-none"><img src="../../assets/images/arrow-down-green.svg" alt="&#709;"></div>
             </div>
           </div>
         </div>
@@ -76,13 +77,14 @@ import step2 from './companyFormStep2.vue'
 import step3 from './companyFormStep3.vue'
 import step4 from './companyFormStep4.vue'
 import success from './companySuccess.vue'
+import {global} from '../../main.js'
 
 export default {
   data: function () {
     return {
       // step variables
       progressStepName: ['Personal Info', 'Service Info', 'Operation Day', 'Financial Day'],
-      progressStepNumber: 0,
+      progressStepNumber: 0
     }
   },
   //
@@ -96,13 +98,27 @@ export default {
   methods: {
     // step change
     next: function () {
-      if (this.progressStepNumber < 3) {
+      global.$emit('submitRequest', {
+        step: this.progressStepNumber
+      })
+    }
+  },
+  created: function () {
+    global.$on('stepSubmitted', (data)=>{
+      if (data.step < 3) {
         this.progressStepNumber++
         console.log('going next');
       }else {
         console.log('form submitted');
       }
-    }
+    })
+  },
+  // loading jquery after component is mounted
+  mounted: function () {
+    $('.submit-alert').on('click',function () {
+      $('.submit-alert p').slideToggle("slow");
+      $('.submit-alert .down-arrow img').toggleClass('up')
+    })
   }
 }
 </script>
