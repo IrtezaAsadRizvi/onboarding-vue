@@ -159,7 +159,6 @@ export default {
         }else{
           if (!this.defaultStartTime) this.defaultStartTimeError = 'please select time'
           if (!this.defaultEndTime) this.defaultEndTimeError = 'please select time'
-          console.log('wait son!');
         }
       }
     }
