@@ -29,7 +29,7 @@
         class="form-control form-input"
         name="resource_name"
         placeholder="Full Name"
-        v-model.lazy="resource_name"
+        v-model="resource_name"
         v-validate="'required|alpha_spaces'"
         :class="{'error-field': errors.has('resource_name')}"
         data-vv-as="Name">
@@ -41,7 +41,7 @@
       <label for="resource_gender" class="label">Gender</label><br>
       <div class="container row">
         <label class="radio col">Male
-          <input type="radio" name="resource_gender" v-model="resource_gender" value="male" v-validate="{ rules: 'required', arg: 'resource_gender' }">
+          <input type="radio" name="resource_gender" v-model="resource_gender" value="male" v-validate="{ rules: 'required', arg: 'resource_gender' }" data-vv-as="Gender">
           <span class="checkmark"></span>
         </label>
         <label class="radio col">Female
@@ -62,7 +62,7 @@
       <input type="text"
         class="form-control form-input"
         name="resource_contact_no"
-        v-model.lazy="resource_contact_no"
+        v-model="resource_contact_no"
         placeholder="Type a Valid number"
         v-validate="'required|numeric'"
         :class="{'error-field': errors.has('resource_contact_no')}"
@@ -74,7 +74,7 @@
     <div class="form-group">
       <label for="resource_address" class="label">Address</label>
       <textarea name="resource_address"
-        class="form-control form-input" rows="4" placeholder="Type your address here" v-model.lazy="resource_address"
+        class="form-control form-input" rows="4" placeholder="Type your address here" v-model="resource_address"
         v-validate="'required'"
         :class="{'error-field': errors.has('resource_address')}"
         data-vv-as="Address"></textarea>
@@ -85,6 +85,7 @@
 </template>
 
 <script>
+import {global} from '../../main.js'
 export default {
   data: function () {
     return {
@@ -97,23 +98,26 @@ export default {
       // file upload
       profImgUploaded: false,
 
-      // export data
-      step1Data: {
-        name: '',
-        gender: '',
-        contact_no: '',
-        address: ''
-      }
     }
   },
-  updated :  function () {
-    if (this.resource_name && this.resource_gender && this.resource_contact_no && this.resource_address) {
-      this.step1Data.name = this.resource_name
-      this.step1Data.gender = this.resource_gender
-      this.step1Data.contact_no = this.resource_contact_no
-      this.step1Data.address = this.resource_address
-      this.$emit('step1Data',this.step1Data)
-    }
+  created: function () {
+    global.$on('resSubmitRequest', (data)=>{
+      if (data.step == 0) {
+        this.$validator.validateAll().then((result) => {
+          if (result) {
+            global.resourceFormData.resourceName = this.resource_name
+            global.resourceFormData.resourceGender = this.resource_gender
+            global.resourceFormData.resourceContactNo = this.resource_contact_no
+            global.resourceFormData.resourceAddress = this.resource_address
+            global.$emit('resStepSubmitted', {
+              step: data.step
+            })
+          }else {
+            console.log('Correct them errors!');
+          }
+        });
+      }
+    })
   }
 
 }

@@ -5,9 +5,17 @@
     <!-- Nid number -->
     <!-- optional -->
     <div class="form-group">
-      <label for="name" class="label">NID Number</label>
-      <label for="name" class="label sub-label">Enter your NID card number</label>
-      <input type="email" class="form-control form-input" name="name" placeholder="NID Number">
+      <label for="resource_nid_num" class="label">NID Number</label>
+      <label for="resource_nid_num" class="label sub-label">Enter your NID card number</label>
+      <input type="text"
+        class="form-control form-input"
+        name="resource_nid_num"
+        placeholder="NID Number"
+        v-model="resource_nid_num"
+        v-validate="'numeric'"
+        :class="{'error-field': errors.has('resource_nid_num')}"
+        data-vv-as="NID Number">
+      <span v-show="errors.has('resource_nid_num')" class="error-text">{{ errors.first('resource_nid_num') }}</span>
     </div>
 
     <!-- Nid Attachment -->
@@ -37,12 +45,30 @@
 </template>
 
 <script>
+import {global} from '../../main.js'
 export default {
   data: function () {
     return {
+      resource_nid_num: '',
       // file upload
       nidImgUploaded: false
     }
+  },
+  created: function () {
+    global.$on('resSubmitRequest', (data)=>{
+      if (data.step == 2) {
+        this.$validator.validateAll().then((result) => {
+          if (result) {
+            global.resourceFormData.resourceNidNumber = this.resource_nid_num
+            global.$emit('resStepSubmitted', {
+              step: data.step
+            })
+          }else {
+            console.log('Correct them errors!');
+          }
+        });
+      }
+    })
   }
 }
 </script>

@@ -5,6 +5,7 @@ import VeeValidate from 'vee-validate'
 // 'global' will hold all the global variables
 export const global = new Vue({
   data: {
+    resourceFormData: {},
     companyFormData: {}
   }
 })

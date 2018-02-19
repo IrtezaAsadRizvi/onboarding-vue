@@ -7,13 +7,21 @@
     <p class="sml-text grey">Your resource profile has been created successfully. You will be able to start working as soon as we verify your profile.</p>
     <!-- Next step button -->
     <div class="form-group text-center">
-      <div class="btn btn-block ob-submit" id="white-btn" @click="">Create Company</div>
+      <div class="btn btn-block ob-submit" id="white-btn" @click="companyForm">Create Company</div>
     </div>
   </div>
 </template>
 
 <script>
+import {global} from '../../main.js'
 export default {
+  methods: {
+    companyForm: function () {
+      global.$emit('companyFormRequest', {
+        step: this.progressStepNumber
+      })
+    }
+  }
 }
 </script>
 
