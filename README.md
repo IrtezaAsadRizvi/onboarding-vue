@@ -1,8 +1,6 @@
 # onboarding
 
-> A Vue.js project
-
-## Build Setup
+## Setup
 
 ``` bash
 # install dependencies
