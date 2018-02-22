@@ -121,7 +121,8 @@ export default {
       defaultEndTime: null,
       defaultStartTimeError: null,
       defaultEndTimeError: null,
-      formError: null
+      formError: null,
+      firstIndex: -1
     }
   },
   methods: {
@@ -140,25 +141,30 @@ export default {
 
     },
     selectDay: function (e, date, index) {
-      console.log(index);
       if (this.setDefaultTime == 0) {
+        this.firstIndex = index
         date.selected = !date.selected
-        if (date.selected) {
+        if (date.selected == true) {
           this.setDefaultTime ++
-        } else {
-          if (this.setDefaultTime < 2) {
-            this.setDefaultTime --
-          }
+          console.log(this.setDefaultTime, index, this.firstIndex);
+        }else {
+          this.setDefaultTime --
+          console.log(this.setDefaultTime, index);
         }
-        if (this.setDefaultTime >= 2) {}
-      }else{
-        e.preventDefault();
-        if (this.defaultStartTime && this.defaultEndTime) {
+      }
+      else if(this.setDefaultTime > 0) {
+        console.log(this.firstIndex);
+        if (index != this.firstIndex) {
+          e.preventDefault();
+          if (this.defaultStartTime && this.defaultEndTime) {
+            date.selected = !date.selected
+            console.log(document.getElementById('date-check-box')[2]);
+          }else{
+            if (!this.defaultStartTime) this.defaultStartTimeError = 'please select time'
+            if (!this.defaultEndTime) this.defaultEndTimeError = 'please select time'
+          }
+        }else {
           date.selected = !date.selected
-          console.log(document.getElementById('date-check-box')[2]);
-        }else{
-          if (!this.defaultStartTime) this.defaultStartTimeError = 'please select time'
-          if (!this.defaultEndTime) this.defaultEndTimeError = 'please select time'
         }
       }
     }
