@@ -146,10 +146,8 @@ export default {
         date.selected = !date.selected
         if (date.selected == true) {
           this.setDefaultTime ++
-          console.log(this.setDefaultTime, index, this.firstIndex);
         }else {
           this.setDefaultTime --
-          console.log(this.setDefaultTime, index);
         }
       }
       else if(this.setDefaultTime > 0) {
@@ -158,13 +156,13 @@ export default {
           e.preventDefault();
           if (this.defaultStartTime && this.defaultEndTime) {
             date.selected = !date.selected
-            console.log(document.getElementById('date-check-box')[2]);
           }else{
             if (!this.defaultStartTime) this.defaultStartTimeError = 'please select time'
             if (!this.defaultEndTime) this.defaultEndTimeError = 'please select time'
           }
         }else {
           date.selected = !date.selected
+          this.setDefaultTime --
         }
       }
     }

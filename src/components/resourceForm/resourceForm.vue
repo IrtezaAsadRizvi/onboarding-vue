@@ -100,12 +100,11 @@ export default {
     global.$on('resStepSubmitted', (data)=>{
       if (data.step < 2) {
         this.progressStepNumber++
-        console.log('progress');
       }else {
         if (this.progressStepNumber == 4) {
           console.log('go to resource portal');
         }
-        console.log(global.companyFormData);
+        console.log(global.resourceFormData);
         this.resourceFormSubmitSuccessful = true;
         this.progressStepNumber++
       }
