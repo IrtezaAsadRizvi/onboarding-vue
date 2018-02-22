@@ -187,10 +187,15 @@ export default {
         if (formData.length == 0) {
           this.formError = "please select Operations days."
         }else {
-          global.companyFormData.companyOperationDays = formData
-          global.$emit('stepSubmitted', {
-            step: data.step
-          })
+          if (!this.defaultStartTime && !this.defaultEndTime) {
+            this.formError = "please select times."
+          }else {
+            // saving the data and progressing to next step
+            global.companyFormData.companyOperationDays = formData
+            global.$emit('stepSubmitted', {
+              step: data.step
+            })
+          }
         }
       }
     })

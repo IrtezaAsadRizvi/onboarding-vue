@@ -39,7 +39,7 @@
               <step3 v-if = "progressStepNumber == 2"></step3>
               <step4 v-if = "progressStepNumber == 3"></step4>
 
-              <!-- <success></success> -->
+              <success v-if="progressStepNumber == 4"></success>
 
               <!-- Next step button -->
               <div class="form-group ob-submit-container text-center col-xl-4 col-lg-4 col-md-6 col-sm-12 offset-xl-4 offset-lg-4 offset-md-3 offset-sm-0">
@@ -84,7 +84,9 @@ export default {
     return {
       // step variables
       progressStepName: ['Personal Info', 'Service Info', 'Operation Day', 'Financial Day'],
-      progressStepNumber: 0
+      progressStepNumber: 0,
+
+      companyFormSubmitSuccessful: false
     }
   },
   //
@@ -109,6 +111,8 @@ export default {
         this.progressStepNumber++
       }else {
         console.log(global.companyFormData);
+        this.resourceFormSubmitSuccessful = true;
+        this.progressStepNumber++
       }
     })
   },

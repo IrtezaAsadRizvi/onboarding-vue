@@ -86,7 +86,6 @@ export default {
             global.$emit('stepSubmitted', {
               step: data.step
             })
-            console.log(this.formData);
           }else {
             console.log('Correct them errors!');
           }
