@@ -87,14 +87,15 @@ export default {
         if (!this.selectedAreas.includes(this.serviceAreas[e.target.selectedIndex -1])) {
           this.selectedAreas.push(this.serviceAreas[e.target.selectedIndex -1])
         }else {
-          console.log("you already selected this area")
+          this.areaError = "you already selected this area"
         }
       }else {
-        console.log("can't select anymore")
+        this.areaError = "can't select anymore"
       }
     },
     // expertise based on selected category
     expertiseMenu: function (e, expertiseCata) {
+      this.selectedExpertise = []
       this.expertiseNone = false
       if (expertiseCata == 'repair') {
         this.catagorizedExpertise = ['ac repair', 'lock repair', 'laptop repair', 'mobile repair']
