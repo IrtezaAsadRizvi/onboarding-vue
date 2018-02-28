@@ -9,11 +9,11 @@
           <!-- progress steps -->
           <div class="col-12 d-none d-sm-none d-md-block" v-if="progressStepNumber <= 2">
             <ul id="progress" class="d-flex justify-content-around">
-              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 0}"><span class="progress-num">1</span> Personal Info</li>
+              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 0}" @click="goToStep(0)"><span class="progress-num" >1</span> Personal Info</li>
               <div class="right-arrow"><img src="../../assets/images/arrow-point-to-right.svg" alt=""></div>
-              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 1}"><span class="progress-num">2</span> Service Info</li>
+              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 1}" @click="goToStep(1)"><span class="progress-num" >2</span> Service Info</li>
               <div class="right-arrow"><img src="../../assets/images/arrow-point-to-right.svg" alt=""></div>
-              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 2}"><span class="progress-num">3</span> NID Info (optional)</li>
+              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 2}" @click="goToStep(2)"><span class="progress-num" >3</span> NID Info (optional)</li>
             </ul>
           </div>
 
@@ -94,6 +94,9 @@ export default {
       global.$emit('resSubmitRequest', {
         step: this.progressStepNumber
       })
+    },
+    goToStep: function (step) {
+      console.log(step);
     }
   },
   created: function () {

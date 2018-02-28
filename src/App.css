@@ -244,6 +244,7 @@ a.link{
 #progress li {
   list-style: none;
   color: #bbbfc4;
+  cursor: pointer;
 }
 span.progress-num{
   height: 35px;
