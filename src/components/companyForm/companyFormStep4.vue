@@ -76,6 +76,12 @@ export default {
     }
   },
   created: function () {
+    if (global.companyFormData.companyBankName && global.companyFormData.companyBankBranch && global.companyFormData.companyBankAccName && global.companyFormData.companyBankAccNo) {
+      this.company_bank_name = global.companyFormData.companyBankName
+      this.company_bank_branch = global.companyFormData.companyBankBranch
+      this.company_bank_acc_name = global.companyFormData.companyBankAccName
+      this.company_bank_acc_no = global.companyFormData.companyBankAccNo
+    }
     global.$on('submitRequest', (data)=>{
       if (data.step == 3) {
         global.companyFormData.companyBankName = this.company_bank_name

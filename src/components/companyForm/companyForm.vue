@@ -3,23 +3,23 @@
     <div id="on-boarding">
       <div class="container">
         <div class="row">
-          <div class="ob-page-header">Get work in just few steps</div>
+          <div class="ob-page-header" v-if="progressStepNumber <= 3">Get work in just few steps</div>
 
           <!-- progress steps -->
-          <div class="col-12 d-none d-sm-none d-md-block">
+          <div class="col-12 d-none d-sm-none d-md-block" v-if="progressStepNumber <= 3">
             <ul id="progress" class="d-flex justify-content-around">
-              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 0}"><span class="progress-num">1</span> Personal Info</li>
+              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 0}" @click="goToStep(0)"><span class="progress-num">1</span> Personal Info</li>
               <div class="right-arrow"><img src="../../assets/images/arrow-point-to-right.svg" alt=""></div>
-              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 1}"><span class="progress-num">2</span> Service Info</li>
+              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 1}" @click="goToStep(1)"><span class="progress-num">2</span> Service Info</li>
               <div class="right-arrow"><img src="../../assets/images/arrow-point-to-right.svg" alt=""></div>
-              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 2}"><span class="progress-num">3</span> Operation Day</li>
+              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 2}" @click="goToStep(2)"><span class="progress-num">3</span> Operation Day</li>
               <div class="right-arrow"><img src="../../assets/images/arrow-point-to-right.svg" alt=""></div>
-              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 3}"><span class="progress-num">4</span> Financial Info</li>
+              <li class="progress-step d-flex align-items-center" :class="{'active' : progressStepNumber == 3}" @click="goToStep(3)"><span class="progress-num">4</span> Financial Info</li>
             </ul>
           </div>
 
           <!-- progress bar -->
-          <div class="col-12 d-xm-block d-sm-block d-md-none d-lg-none d-xl-none">
+          <div class="col-12 d-xm-block d-sm-block d-md-none d-lg-none d-xl-none" v-if="progressStepNumber <= 2">
             <div class="d-flex justify-content-end">
               <p id="progress-percentage">{{25*(progressStepNumber+1)}}%</p>
             </div>
@@ -57,7 +57,7 @@
           </div>
           <!-- end of form div -->
 
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit-alert-container">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit-alert-container" v-if="progressStepNumber <= 2">
             <div class="alert alert-success submit-alert" role="alert">
               <img src="../../assets/images/exclamation-sign.svg"><strong>Why we need this information?</strong><br>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -103,12 +103,42 @@ export default {
       global.$emit('submitRequest', {
         step: this.progressStepNumber
       })
+    },
+    goToStep: function (step) {
+      console.log(step);
+      if(step >=  this.progressStepNumber) {
+        console.log('fill this before');
+      }else {
+        this.progressStepNumber = step
+      }
     }
   },
   created: function () {
     global.$on('stepSubmitted', (data)=>{
-      if (data.step < 3) {
-        this.progressStepNumber++
+      if (data.step <= 3) {
+        // this.progressStepNumber++
+        switch(data.step) {
+            case 0:
+                if (global.companyFormData.companyName && global.companyFormData.companyArea && global.companyFormData.companyAddress && global.companyFormData.licenceNumber) {
+                  this.progressStepNumber = 1
+                }
+                break;
+            case 1:
+                if (global.companyFormData.companyServiceAreas && global.companyFormData.companyExpertise) {
+                  this.progressStepNumber = 2
+                }
+                break;
+            case 2:
+                if (global.companyFormData.companyOperationDays) {
+                  this.progressStepNumber = 3
+                }
+                break;
+            case 3:
+                this.progressStepNumber = 4
+                console.log(global.resourceFormData);
+                break;
+            default:
+        }
       }else {
         console.log(global.companyFormData);
         this.resourceFormSubmitSuccessful = true;

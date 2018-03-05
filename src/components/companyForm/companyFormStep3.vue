@@ -151,7 +151,6 @@ export default {
         }
       }
       else if(this.setDefaultTime > 0) {
-        console.log(this.firstIndex);
         if (index != this.firstIndex) {
           e.preventDefault();
           if (this.defaultStartTime && this.defaultEndTime) {
@@ -179,6 +178,13 @@ export default {
     }
   },
   created: function () {
+    if(global.companyFormData.companyOperationDays) {
+      this.dailyOperationTime = global.temp.dailyOperationTime
+      this.setDefaultTime = global.temp.setDefaultTime
+      this.defaultStartTime = global.temp.defaultStartTime
+      this.defaultEndTime = global.temp.defaultEndTime
+      this.firstIndex = global.temp.firstIndex
+    }
     global.$on('submitRequest', (data)=>{
       if (data.step == 2) {
         var formData = this.dailyOperationTime.filter(function(date) {
@@ -187,9 +193,14 @@ export default {
         if (formData.length == 0) {
           this.formError = "please select Operations days."
         }else {
-          if (!this.defaultStartTime && !this.defaultEndTime) {
+          if (!this.defaultStartTime || !this.defaultEndTime) {
             this.formError = "please select times."
           }else {
+            global.temp.dailyOperationTime = this.dailyOperationTime
+            global.temp.setDefaultTime = this.setDefaultTime
+            global.temp.defaultStartTime = this.defaultStartTime
+            global.temp.defaultEndTime = this.defaultEndTime
+            global.temp.firstIndex = this.firstIndex
             // saving the data and progressing to next step
             global.companyFormData.companyOperationDays = formData
             global.$emit('stepSubmitted', {

@@ -75,6 +75,12 @@ export default {
     }
   },
   created: function () {
+    if(global.companyFormData.companyName && global.companyFormData.companyArea && global.companyFormData.companyAddress && global.companyFormData.licenceNumber){
+      this.formData.company_name = global.companyFormData.companyName
+      this.formData.company_area = global.companyFormData.companyArea
+      this.formData.company_address = global.companyFormData.companyAddress
+      this.formData.licence_number = global.companyFormData.licenceNumber
+    }
     global.$on('submitRequest', (data)=>{
       if (data.step == 0) {
         this.$validator.validateAll().then((result) => {

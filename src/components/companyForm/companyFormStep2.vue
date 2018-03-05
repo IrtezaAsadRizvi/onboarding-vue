@@ -144,11 +144,19 @@ export default {
     }
   },
   created: function () {
+    if (global.companyFormData.companyServiceAreas && global.companyFormData.companyExpertise) {
+      this.selectedAreas = global.companyFormData.companyServiceAreas
+      this.selectedExpertise = global.companyFormData.companyExpertise
+      this.expertiseNone = global.temp.expertiseNoneCom
+      this.catagorizedExpertise = global.temp.catagorizedExpertiseCom
+    }
     global.$on('submitRequest', (data)=>{
       if (data.step == 1) {
         if (this.selectedAreas.length == 3 && this.selectedExpertise.length > 0) {
           global.companyFormData.companyServiceAreas = this.selectedAreas
           global.companyFormData.companyExpertise = this.selectedExpertise
+          global.temp.expertiseNoneCom = this.expertiseNone
+          global.temp.catagorizedExpertiseCom = this.catagorizedExpertise
           global.$emit('stepSubmitted', {
             step: data.step
           })
