@@ -147,12 +147,16 @@ export default {
     if (global.resourceFormData.resourceServiceAreas && global.resourceFormData.resourceExpertise) {
       this.selectedAreas = global.resourceFormData.resourceServiceAreas
       this.selectedExpertise = global.resourceFormData.resourceExpertise
+      this.expertiseNone = global.temp.expertiseNone
+      this.catagorizedExpertise = global.temp.catagorizedExpertise
     }
     global.$on('resSubmitRequest', (data)=>{
       if (data.step == 1) {
         if (this.selectedAreas.length == 3 && this.selectedExpertise.length > 0) {
           global.resourceFormData.resourceServiceAreas = this.selectedAreas
           global.resourceFormData.resourceExpertise = this.selectedExpertise
+          global.temp.expertiseNone = this.expertiseNone
+          global.temp.catagorizedExpertise = this.catagorizedExpertise
           global.$emit('resStepSubmitted', {
             step: data.step
           })

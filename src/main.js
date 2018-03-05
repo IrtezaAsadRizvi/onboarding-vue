@@ -6,7 +6,8 @@ import VeeValidate from 'vee-validate'
 export const global = new Vue({
   data: {
     resourceFormData: {},
-    companyFormData: {}
+    companyFormData: {},
+    temp: {}
   }
 })
 
