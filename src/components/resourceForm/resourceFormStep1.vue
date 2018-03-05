@@ -101,6 +101,12 @@ export default {
     }
   },
   created: function () {
+    if (global.resourceFormData.resourceName && global.resourceFormData.resourceGender && global.resourceFormData.resourceContactNo && global.resourceFormData.resourceAddress) {
+      this.resource_name = global.resourceFormData.resourceName
+      this.resource_gender = global.resourceFormData.resourceGender
+      this.resource_contact_no = global.resourceFormData.resourceContactNo
+      this.resource_address = global.resourceFormData.resourceAddress
+    }
     global.$on('resSubmitRequest', (data)=>{
       if (data.step == 0) {
         this.$validator.validateAll().then((result) => {

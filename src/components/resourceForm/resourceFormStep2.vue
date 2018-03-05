@@ -144,6 +144,10 @@ export default {
     }
   },
   created: function () {
+    if (global.resourceFormData.resourceServiceAreas && global.resourceFormData.resourceExpertise) {
+      this.selectedAreas = global.resourceFormData.resourceServiceAreas
+      this.selectedExpertise = global.resourceFormData.resourceExpertise
+    }
     global.$on('resSubmitRequest', (data)=>{
       if (data.step == 1) {
         if (this.selectedAreas.length == 3 && this.selectedExpertise.length > 0) {

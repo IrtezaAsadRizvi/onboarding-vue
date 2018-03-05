@@ -97,17 +97,37 @@ export default {
     },
     goToStep: function (step) {
       console.log(step);
+      if(step >=  this.progressStepNumber) {
+        console.log('fill this before');
+      }else {
+        this.progressStepNumber = step
+      }
     }
   },
   created: function () {
     global.$on('resStepSubmitted', (data)=>{
-      if (data.step < 2) {
-        this.progressStepNumber++
+      if (data.step <= 2) {
+        // this.progressStepNumber++
+        switch(data.step) {
+            case 0:
+                if (global.resourceFormData.resourceName && global.resourceFormData.resourceGender && global.resourceFormData.resourceContactNo && global.resourceFormData.resourceAddress) {
+                  this.progressStepNumber = 1
+                }
+                break;
+            case 1:
+                if (global.resourceFormData.resourceServiceAreas && global.resourceFormData.resourceExpertise) {
+                  this.progressStepNumber = 2
+                }
+                break;
+            case 2:
+                this.progressStepNumber = 3
+                console.log(global.resourceFormData);
+                break;
+        }
       }else {
         if (this.progressStepNumber == 4) {
           console.log('go to resource portal');
         }
-        console.log(global.resourceFormData);
         this.resourceFormSubmitSuccessful = true;
         this.progressStepNumber++
       }
