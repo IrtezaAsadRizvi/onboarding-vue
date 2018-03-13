@@ -8,13 +8,13 @@
       <div class="select">
           <select @change="selectServiceArea" :class="areaError? 'error-field': ''">
               <option selected disabled>Select service area</option>
-              <option v-for="area in serviceAreas" value="">{{area}}</option>
+              <option v-for="area in serviceAreas" value="">{{area.name}}</option>
           </select>
           <div class="down-arrow"><img src="../../assets/images/arrow-down.svg" alt="&#709;"></div>
       </div>
       <span v-show="areaError" class="error-text">{{ areaError }}</span>
       <ul class="selected-areas">
-        <li v-for="area in selectedAreas"><div class="list-bullet" @click="removeFromArray(selectedAreas,area)"></div>{{area}} <div class="cross-sign float-right" style="margin: 4px;" @click="removeFromArray(selectedAreas,area)"></div></li>
+        <li v-for="area in selectedAreas"><div class="list-bullet" @click="removeFromArray(selectedAreas,area)"></div>{{area.name}} <div class="cross-sign float-right" style="margin: 4px;" @click="removeFromArray(selectedAreas,area)"></div></li>
       </ul>
     </div>
     <!-- Expertise -->
@@ -58,9 +58,13 @@
 
 <script>
 import {global} from '../../main.js'
+import axios from 'axios'
+
 export default {
   data: function () {
     return  {
+      // api
+      api_locations: 'http://api.dev-sheba.xyz/v1/locations',
       // service areas
       serviceAreas: ['mirpur', 'gulshan', 'banani', 'uttara', 'dhanmondi', 'khilgaon'],
       selectedAreas: [],
@@ -144,6 +148,13 @@ export default {
     }
   },
   created: function () {
+    // getting data
+    axios.get(this.api_locations).then((res)=>{
+      this.serviceAreas = res.data.locations;
+    }).catch(function (error) {
+      console.log(error);
+    });
+
     if (global.companyFormData.companyServiceAreas && global.companyFormData.companyExpertise) {
       this.selectedAreas = global.companyFormData.companyServiceAreas
       this.selectedExpertise = global.companyFormData.companyExpertise

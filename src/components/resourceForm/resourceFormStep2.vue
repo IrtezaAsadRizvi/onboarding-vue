@@ -8,13 +8,13 @@
       <div class="select">
           <select @change="selectServiceArea" :class="areaError? 'error-field': ''">
               <option selected disabled>Select service area</option>
-              <option v-for="area in serviceAreas" value="">{{area}}</option>
+              <option v-for="area in serviceAreas" value="">{{area.name}}</option>
           </select>
           <div class="down-arrow"><img src="../../assets/images/arrow-down.svg" alt="&#709;"></div>
       </div>
       <span v-show="areaError" class="error-text">{{ areaError }}</span>
       <ul class="selected-areas">
-        <li v-for="area in selectedAreas"><div class="list-bullet" @click="removeFromArray(selectedAreas,area)"></div>{{area}} <div class="cross-sign float-right" style="margin: 4px;" @click="removeFromArray(selectedAreas,area)"></div></li>
+        <li v-for="area in selectedAreas"><div class="list-bullet" @click="removeFromArray(selectedAreas,area)"></div>{{area.name}} <div class="cross-sign float-right" style="margin: 4px;" @click="removeFromArray(selectedAreas,area)"></div></li>
       </ul>
     </div>
     <!-- Expertise -->
@@ -23,7 +23,7 @@
       <label for="name" class="label sub-label">Select your expertise</label>
       <div class="expertise-container d-flex justify-content-between">
         <div v-for="expertiseCata in expertiseCatas" class="expertise" @click="expertiseMenu($event, expertiseCata.name)">
-            <img :src="expertiseCata.img" :alt="expertiseCata.name">
+            <img :src="expertiseCata.icon" :alt="expertiseCata.name">
             <p>{{expertiseCata.name}}</p>
         </div>
         <div class="expertise" @click="expertiseNone = true">
@@ -58,19 +58,18 @@
 
 <script>
 import {global} from '../../main.js'
+import axios from 'axios'
 export default {
   data: function () {
     return  {
+      // api
+      api_locations: 'http://api.dev-sheba.xyz/v1/locations',
+      api_catagories: "https://api.dev-sheba.xyz/sheba?query={ categories(isMaster:true){ id,name,icon,children{ id,name } } }",
       // service areas
-      serviceAreas: ['mirpur', 'gulshan', 'banani', 'uttara', 'dhanmondi', 'khilgaon'],
+      serviceAreas: [],
       selectedAreas: [],
       // expertises
-      expertiseCatas: [
-        {name: 'repair', img: "/dist/repair.svg"},
-        {name: 'beauty', img: "/dist/beauty.svg"},
-        {name: 'cleaning', img: "/dist/cleaning-service.svg"},
-        {name: 'food', img: "/dist/food.svg"}
-      ],
+      expertiseCatas: [],
       selectedExpertise: [],
       catagorizedExpertise: [],
       expertiseNone: false,
@@ -94,21 +93,22 @@ export default {
       }
     },
     // expertise based on selected category
-    expertiseMenu: function (e, expertiseCata) {
+    expertiseMenu: function (e, cata) {
       this.selectedExpertise = []
       this.expertiseNone = false
-      if (expertiseCata == 'repair') {
-        this.catagorizedExpertise = ['ac repair', 'lock repair', 'laptop repair', 'mobile repair']
-      }
-      else if (expertiseCata == 'beauty') {
-        this.catagorizedExpertise = ['hair style', 'facial', 'beauty 1', 'beauty 2']
-      }
-      else if (expertiseCata == 'cleaning') {
-        this.catagorizedExpertise = ['house cleaning', 'car cleaning', 'cleaning 1', 'cleaning 2', 'cleaning']
-      }
-      else if (expertiseCata == 'food') {
-        this.catagorizedExpertise = ['cooking', 'food delivery', 'diet planner']
-      }
+      this.catagorizedExpertise = cata.children
+      // if (expertiseCata == 'repair') {
+      //   this.catagorizedExpertise = ['ac repair', 'lock repair', 'laptop repair', 'mobile repair']
+      // }
+      // else if (expertiseCata == 'beauty') {
+      //   this.catagorizedExpertise = ['hair style', 'facial', 'beauty 1', 'beauty 2']
+      // }
+      // else if (expertiseCata == 'cleaning') {
+      //   this.catagorizedExpertise = ['house cleaning', 'car cleaning', 'cleaning 1', 'cleaning 2', 'cleaning']
+      // }
+      // else if (expertiseCata == 'food') {
+      //   this.catagorizedExpertise = ['cooking', 'food delivery', 'diet planner']
+      // }
     },
     // addExpertise: function (expertise) {
     //   this.selectedExpertise.push(expertise)
@@ -144,6 +144,17 @@ export default {
     }
   },
   created: function () {
+    // getting data
+    axios.get(this.api_locations).then((res)=>{
+      this.serviceAreas = res.data.locations;
+    }).catch(function (error) {
+      console.log(error);
+    });
+    axios.get(this.api_catagories).then((res)=>{
+      this.expertiseCatas = res.data.categories;
+    }).catch(function (error) {
+      console.log(error);
+    });
     if (global.resourceFormData.resourceServiceAreas && global.resourceFormData.resourceExpertise) {
       this.selectedAreas = global.resourceFormData.resourceServiceAreas
       this.selectedExpertise = global.resourceFormData.resourceExpertise
