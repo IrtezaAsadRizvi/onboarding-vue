@@ -68,11 +68,12 @@
 <script>
 import {global} from '../../main.js'
 import axios from 'axios'
+
+
 export default {
   data: function () {
     return  {
       // api
-      apiBaseUrl: 'http://api.dev-sheba.xyz',
       apiLocations: '',
       apiCategories: '',
       // service areas
@@ -156,8 +157,8 @@ export default {
   },
   created: function () {
     // define
-    this.apiLocations = this.apiBaseUrl + '/v1/locations'
-    this.apiCategories = this.apiBaseUrl + '/sheba?query={ categories(isMaster:true){ id,name,icon,children{ id,name } } }'
+    this.apiLocations = global.apiBaseUrl + '/v1/locations'
+    this.apiCategories = global.apiBaseUrl + '/sheba?query={ categories(isMaster:true){ id,name,icon,children{ id,name } } }'
     // getting data
     axios.get(this.apiLocations).then((res)=>{
       this.serviceAreas = res.data.locations;

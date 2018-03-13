@@ -7,7 +7,8 @@ export const global = new Vue({
   data: {
     resourceFormData: {},
     companyFormData: {},
-    temp: {}
+    temp: {},
+    apiBaseUrl: 'http://api.dev-sheba.xyz'
   }
 })
 

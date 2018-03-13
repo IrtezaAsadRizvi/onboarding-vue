@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <resource-form v-if="!goToCompanyForm"></resource-form>
+    <resource-form v-if="!goToCompanyForm" resource-id=""></resource-form>
     <company-form v-if="goToCompanyForm"></company-form>
     <div class="illustration"><img src="./assets/images/illustration.png" alt=""></div>
   </div>
