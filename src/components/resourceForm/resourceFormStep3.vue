@@ -22,9 +22,9 @@
     <div class="form-group">
       <label for="name" class="label">NID Attachment</label>
       <label for="name" class="label sub-label">Attach your NID</label>
-      <input type="file" id="file_nid" />
-      <label for="file_nid" class="file__drop_nid" data-image-uploader-nid>
-        <img id="img-preview" v-if="nidImgUploaded" data-image-nid />
+      <input type="file" id="resource-nid-img" />
+      <label for="resource-nid-img" class="file__drop_nid" data-image-uploader-nid>
+        <img id="img-preview-nid" v-if="nidImgUploaded" data-image @change="upload(e)" />
         <div id="upload-icon" v-if="!nidImgUploaded">
           <img class="d-none d-sm-none d-md-block"src="../../assets/images/upload.svg" alt="">
           <img class="d-xm-block d-sm-block d-md-none d-lg-none d-xl-none"src="../../assets/images/image-filled-square.svg" alt="">
@@ -51,7 +51,8 @@ export default {
     return {
       resource_nid_num: '',
       // file upload
-      nidImgUploaded: false
+      nidImgUploaded: false,
+
     }
   },
   created: function () {
@@ -69,6 +70,23 @@ export default {
         });
       }
     })
+  },
+  mounted(){
+    let self = this
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          $('#img-preview-nid').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+        self.nidImgUploaded = true;
+      }
+    }
+    $("#resource-nid-img").change(function() {
+      readURL(this);
+    });
   }
 }
 </script>

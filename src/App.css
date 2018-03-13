@@ -331,10 +331,10 @@ span.progress-num{
   margin: 0px auto;
   padding-top: 10px;
 }
-#file {
+#resource-profile-img {
   display:none;
 }
-#file_nid {
+#resource-nid-img {
   display:none;
 }
 .file__drop, .file__drop_nid {
@@ -352,7 +352,7 @@ span.progress-num{
 .file__drop p span, .file__drop_nid p span{
   font-size: 0.8em;
 }
-#img-preview {
+#img-preview, #img-preview-nid {
   height: 110px;
   width: 110px;
   margin-top: 10px;
@@ -382,18 +382,25 @@ span.progress-num{
 
 /* expertise */
 /* expertise selection box */
+
+.expertise-container .row .col-md-3 {
+  padding: 5px;
+}
 .expertise {
   border: 1.5px solid #cdd8df;
-  height: 65px;
-  width: 19%;
+  height: 75px;
+  width: 100%;
   text-align: center;
   padding-top: 7px;
   border-radius: 3px;
   cursor: pointer;
-  margin: 0px;
+  margin: 10px 0px;
 }
 .expertise:hover {
   background-color: #f5f9fb;
+}
+.expertise.none {
+  margin: 15px 5px;
 }
 .expertise img {
   height: 30px;
@@ -401,8 +408,10 @@ span.progress-num{
 }
 .expertise p {
   font-size: 0.8em;
+  line-height: 0.9em;
   color: #909ca8;
   font-weight: 500;
+  margin: 5px 0px;
 }
 .expertise.active {
   border-color: #445ae3;

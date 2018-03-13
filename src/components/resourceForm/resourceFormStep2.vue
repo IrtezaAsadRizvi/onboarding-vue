@@ -22,20 +22,29 @@
       <label for="name" class="label">Expertise</label>
       <label for="name" class="label sub-label">Select your expertise</label>
       <div class="expertise-container d-flex justify-content-between">
-        <div v-for="expertiseCata in expertiseCatas" class="expertise" @click="expertiseMenu($event, expertiseCata.name)">
+        <!-- <div v-for="expertiseCata in expertiseCatas" class="expertise" @click="expertiseMenu($event, expertiseCata.name)">
             <img :src="expertiseCata.icon" :alt="expertiseCata.name">
             <p>{{expertiseCata.name}}</p>
+        </div> -->
+        <div class="row">
+          <div class="col-md-3 col-sm-3 col-3" v-for="expertiseCata in expertiseCatas">
+            <div class="expertise" @click="expertiseMenu($event, expertiseCata)">
+                <img :src="expertiseCata.icon" :alt="expertiseCata.name">
+                <p>{{expertiseCata.name}}</p>
+            </div>
+          </div>
+          <div class="expertise none col-md-3 col-sm-3 col-3" @click="expertiseNone = true">
+              <p>None</p>
+          </div>
         </div>
-        <div class="expertise" @click="expertiseNone = true">
-            <p>None</p>
-        </div>
+
       </div>
     </div>
     <!-- @click="addExpertise(expertise)" -->
     <div class="form-group">
       <div v-if="!expertiseNone" v-for="expertise in catagorizedExpertise">
-        <label class="checkboxcontainer" >{{expertise}}
-            <input type="checkbox" :value="expertise" v-model="selectedExpertise" id="expertise-checkbox">
+        <label class="checkboxcontainer" >{{expertise.name}}
+            <input type="checkbox" :value="expertise.id" v-model="selectedExpertise" id="expertise-checkbox">
           <span class="checkboxcheckmark"></span>
         </label>
       </div>
@@ -63,8 +72,9 @@ export default {
   data: function () {
     return  {
       // api
-      api_locations: 'http://api.dev-sheba.xyz/v1/locations',
-      api_catagories: "https://api.dev-sheba.xyz/sheba?query={ categories(isMaster:true){ id,name,icon,children{ id,name } } }",
+      apiBaseUrl: 'http://api.dev-sheba.xyz',
+      apiLocations: '',
+      apiCategories: '',
       // service areas
       serviceAreas: [],
       selectedAreas: [],
@@ -97,6 +107,7 @@ export default {
       this.selectedExpertise = []
       this.expertiseNone = false
       this.catagorizedExpertise = cata.children
+      console.log(cata);
       // if (expertiseCata == 'repair') {
       //   this.catagorizedExpertise = ['ac repair', 'lock repair', 'laptop repair', 'mobile repair']
       // }
@@ -144,14 +155,18 @@ export default {
     }
   },
   created: function () {
+    // define
+    this.apiLocations = this.apiBaseUrl + '/v1/locations'
+    this.apiCategories = this.apiBaseUrl + '/sheba?query={ categories(isMaster:true){ id,name,icon,children{ id,name } } }'
     // getting data
-    axios.get(this.api_locations).then((res)=>{
+    axios.get(this.apiLocations).then((res)=>{
       this.serviceAreas = res.data.locations;
     }).catch(function (error) {
       console.log(error);
     });
-    axios.get(this.api_catagories).then((res)=>{
-      this.expertiseCatas = res.data.categories;
+    axios.get(this.apiCategories).then((res)=>{
+      this.expertiseCatas = res.data.data.categories;
+      console.log(this.expertiseCatas);
     }).catch(function (error) {
       console.log(error);
     });

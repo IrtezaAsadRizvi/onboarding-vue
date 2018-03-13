@@ -5,17 +5,17 @@
     <!-- file drag and drop -->
     <div class="form-group">
       <label for="" class="label d-none d-sm-none d-md-block">Profile Image</label>
-      <input type="file" id="file" />
+      <input type="file" id="resource-profile-img" @change="upload($event)" />
       <!-- the area of drag & drop -->
-      <label for="file" class="file__drop" data-image-uploader>
-        <img id="img-preview" v-if="profImgUploaded" data-image />
+      <label for="resource-profile-img" class="file__drop" data-image-uploader>
+        <img id="img-preview" v-if="profImgUploaded" data-image @change="upload(e)" />
         <div id="upload-icon" v-if="!profImgUploaded">
           <img class="d-none d-sm-none d-md-block"src="../../assets/images/upload.svg" alt="">
           <img class="d-xm-block d-sm-block d-md-none d-lg-none d-xl-none"src="../../assets/images/user.jpg" alt="">
         </div>
         <p class="grey-bold d-none d-sm-none d-md-block" v-if="!profImgUploaded">Drag &amp; drop photo here <br><span class="grey d-none d-sm-none d-md-block">or</span></p>
 
-        <div id="upload-btn" for="file">
+        <div id="upload-btn" for="resource-profile-img">
           <span v-if="!profImgUploaded">Upload Photo</span>
           <span v-if="profImgUploaded">Choose Another</span>
         </div>
@@ -97,8 +97,15 @@ export default {
 
       // file upload
       profImgUploaded: false,
+      imgSrc: ''
 
     }
+  },
+  methods: {
+    upload(e) {
+      console.log(e.target.files[0]);
+    }
+
   },
   created: function () {
     if (global.resourceFormData.resourceName && global.resourceFormData.resourceGender && global.resourceFormData.resourceContactNo && global.resourceFormData.resourceAddress) {
@@ -124,6 +131,23 @@ export default {
         });
       }
     })
+  },
+  mounted(){
+    let self = this
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          $('#img-preview').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+        self.profImgUploaded = true;
+      }
+    }
+    $("#resource-profile-img").change(function() {
+      readURL(this);
+    });
   }
 
 }

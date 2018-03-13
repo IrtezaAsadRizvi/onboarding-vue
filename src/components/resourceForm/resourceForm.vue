@@ -73,6 +73,8 @@ import step2 from './resourceFormStep2.vue'
 import step3 from './resourceFormStep3.vue'
 import success from './resourceSuccess.vue'
 import {global} from '../../main.js'
+import axios from 'axios'
+
 export default {
   data: function () {
     return {
@@ -112,16 +114,34 @@ export default {
             case 0:
                 if (global.resourceFormData.resourceName && global.resourceFormData.resourceGender && global.resourceFormData.resourceContactNo && global.resourceFormData.resourceAddress) {
                   this.progressStepNumber = 1
+                  let step1Data = {
+                    step: 1,
+                    name: global.resourceFormData.resourceName,
+                    gender: global.resourceFormData.resourceGender,
+                    contact: global.resourceFormData.resourceContactNo,
+                    address: global.resourceFormData.resourceAddress
+                  }
+                  console.log(step1Data);
+                  axios.post('https://api.dev-sheba.xyz/', step1Data)
                 }
                 break;
             case 1:
                 if (global.resourceFormData.resourceServiceAreas && global.resourceFormData.resourceExpertise) {
                   this.progressStepNumber = 2
+                  let step2Data = {
+                    service_areas: global.resourceFormData.resourceServiceAreas,
+                    expertise: global.resourceFormData.resourceExpertise
+                  }
+                  console.log(step2Data);
                 }
                 break;
             case 2:
                 this.progressStepNumber = 3
-                console.log(global.resourceFormData);
+                let step3Data = {
+                  nid: global.resourceFormData.resourceNidNumber
+                }
+                console.log(step3Data);
+                // console.log(global.resourceFormData);
                 break;
         }
       }else {
