@@ -51,11 +51,11 @@
       <div v-if="expertiseNone">
         <p>What is your role in your company?</p>
         <label class="radio">Admin
-          <input type="radio" name="role" value="admin">
+          <input type="radio" name="role" value="admin" v-model="resourceType">
           <span class="checkmark"></span>
         </label><br>
         <label class="radio">Finance
-          <input type="radio" name="role" value="finance">
+          <input type="radio" name="role" value="finance" v-model="resourceType">
           <span class="checkmark"></span>
         </label>
       </div>
@@ -79,6 +79,9 @@ export default {
       // service areas
       serviceAreas: [],
       selectedAreas: [],
+
+      resourceType: '',
+
       // expertises
       expertiseCatas: [],
       selectedExpertise: [],
@@ -179,18 +182,36 @@ export default {
     }
     global.$on('resSubmitRequest', (data)=>{
       if (data.step == 1) {
-        if (this.selectedAreas.length == 3 && this.selectedExpertise.length > 0) {
-          global.resourceFormData.resourceServiceAreas = this.selectedAreas
-          global.resourceFormData.resourceExpertise = this.selectedExpertise
-          global.temp.expertiseNone = this.expertiseNone
-          global.temp.catagorizedExpertise = this.catagorizedExpertise
-          global.$emit('resStepSubmitted', {
-            step: data.step
-          })
+        if (this.expertiseNone == false) {
+          if (this.selectedAreas.length == 3 && this.selectedExpertise.length > 0) {
+            global.resourceFormData.resourceServiceAreas = this.selectedAreas
+            global.resourceFormData.resourceExpertise = this.selectedExpertise
+            global.resourceFormData.resourceType = "handyman"
+            global.temp.expertiseNone = this.expertiseNone
+            global.temp.catagorizedExpertise = this.catagorizedExpertise
+            global.$emit('resStepSubmitted', {
+              step: data.step
+            })
+          }else {
+            if (this.selectedAreas.length == 0) this.areaError = 'You have to select Service areas'
+            if (this.selectedExpertise.length == 0) this.expertiseError = 'You have to select your Expertise'
+          }
         }else {
-          if (this.selectedAreas.length == 0) this.areaError = 'You have to select Service areas'
-          if (this.selectedExpertise.length == 0) this.expertiseError = 'You have to select your Expertise'
+          if (this.selectedAreas.length == 3 && this.resourceType) {
+            global.resourceFormData.resourceServiceAreas = this.selectedAreas
+            global.resourceFormData.resourceExpertise = null
+            global.resourceFormData.resourceType = this.resourceType
+            global.temp.expertiseNone = this.expertiseNone
+            global.temp.catagorizedExpertise = this.catagorizedExpertise
+            global.$emit('resStepSubmitted', {
+              step: data.step
+            })
+          }else {
+            if (this.selectedAreas.length == 0) this.areaError = 'You have to select Service areas'
+            if (this.resourceType == '') this.expertiseError = 'You have to select your Type'
+          }
         }
+
       }
     })
   },

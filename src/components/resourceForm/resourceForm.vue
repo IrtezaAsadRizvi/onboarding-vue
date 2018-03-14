@@ -126,11 +126,12 @@ export default {
                 }
                 break;
             case 1:
-                if (global.resourceFormData.resourceServiceAreas && global.resourceFormData.resourceExpertise) {
+                if (global.resourceFormData.resourceServiceAreas) {
                   this.progressStepNumber = 2
                   let step2Data = {
                     service_areas: global.resourceFormData.resourceServiceAreas,
-                    expertise: global.resourceFormData.resourceExpertise
+                    expertise: global.resourceFormData.resourceExpertise,
+                    type: global.resourceFormData.resourceType
                   }
                   console.log(step2Data);
                 }
